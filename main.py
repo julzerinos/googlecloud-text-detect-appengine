@@ -1,4 +1,4 @@
-# sources
+# sources - flask & google
 #   relative paths in app engine
 #   https://stackoverflow.com/questions/61894/whats-a-good-way-to-find-relative-paths-in-google-app-engine
 #
@@ -8,7 +8,9 @@
 #   templates in App Engine Flask
 #   https://books.google.pl/books?id=9QdYgH5mEi8C&pg=PA120&lpg=PA120&dq=app+engine+templates+folder&source=bl&ots=bbroQ5Sgoo&sig=ACfU3U1VFKmcUTDkCOP9KgUImkfRhuRyGQ&hl=en&sa=X&ved=2ahUKEwjDrLbT5vvmAhWpl4sKHRiZC0QQ6AEwAnoECAoQAQ#v=onepage&q=app%20engine%20templates%20folder&f=false
 #
-
+# sources - google auth & users
+#   google sign-in
+#   https://developers.google.com/identity/sign-in/web
 
 import os
 
@@ -44,14 +46,6 @@ def success():
             blob.upload_from_string(f.read())
 
         return render_template('success.html')
-
-
-def __find_file(filefolder, filename):
-    return os.path.join(
-        os.path.dirname(__file__),
-        filefolder,
-        filename
-    )
 
 
 if __name__ == '__main__':
