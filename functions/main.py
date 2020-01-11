@@ -3,7 +3,7 @@ import io
 
 from google.cloud import storage
 
-from PIL import image
+from PIL import Image
 
 def gcf1_rescale(event, context):
 
