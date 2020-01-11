@@ -27,7 +27,6 @@ import io
 
 from google.cloud import storage
 from google.cloud import pubsub_v1
-# google-cloud-vision 0.41.0
 from google.cloud import vision
 
 from PIL import Image

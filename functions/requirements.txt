@@ -1,3 +1,4 @@
 Pillow>=7.0.0
 google-cloud-storage>=1.24.1
 google-cloud-pubsub>=1.1.0
+google-cloud-vision>=0.41.0

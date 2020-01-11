@@ -1,8 +1,18 @@
-# source
-# https://cloud.google.com/cloud-build/docs/configuring-builds/create-basic-configuration
-# https://cloud.google.com/source-repositories/docs/quickstart-triggering-builds-with-source-repositories
+# Sources
+# General       https://cloud.google.com/cloud-build/docs/configuring-builds/create-basic-configuration
+# App Engine    https://cloud.google.com/source-repositories/docs/quickstart-triggering-builds-with-source-repositories
+# Functions     https://medium.com/google-cloud/triggering-cloud-functions-deployments-97691f9b5416
 
 steps:
+
 - name: "gcr.io/cloud-builders/gcloud"
   args: ["app", "deploy"]
+
+- name: "gcr.io/cloud-builders/gcloud"
+  args: [
+      'beta',
+      'functions',
+      'deploy','gcf1_rescale',
+  ]
+
 timeout: "1600s"
