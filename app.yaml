@@ -1,1 +1,4 @@
-runtime: python37
+- url: .*
+  runtime: python37
+  script: main.py
+  secure: always

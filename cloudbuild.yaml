@@ -7,6 +7,8 @@
 
 steps:
 
+# Deploy cloud functions
+
 - name: "gcr.io/cloud-builders/gcloud"
   args: [
       'functions',
@@ -39,6 +41,8 @@ steps:
       '--runtime=python37',
       '--region=europe-west1',
   ]
+
+# Deploy App Engine
 
 - name: "gcr.io/cloud-builders/gcloud"
   args: ["app", "deploy"]
