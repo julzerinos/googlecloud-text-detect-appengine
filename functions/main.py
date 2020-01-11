@@ -10,6 +10,9 @@
 #
 #   blobs saved as strings of bytes
 #   https://stackoverflow.com/questions/46078088/how-to-upload-a-bytes-image-on-google-cloud-storage-from-a-python-script
+#
+#   maintain aspect ratio
+#   https://stackoverflow.com/questions/273946/how-do-i-resize-an-image-using-pil-and-maintain-its-aspect-ratio
 
 import io
 
@@ -33,10 +36,13 @@ def gcf1_rescale(event, context):
     # Get uploaded file
     blob = source_bucket.blob(name).download_as_string()
 
-    # Rescale
+    # Open and rescale
     im = Image.open(io.BytesIO(blob), mode='r')
 
-    im.thumbnail(512, Image.ANTIALIAS)
+    basewidth = 512
+    wpercent = (basewidth/float(img.size[0]))
+    hsize = int((float(img.size[1])*float(wpercent)))
+    im = im.resize((basewidth, hsize), Image.ANTIALIAS)
 
     # Save bytes
     byte_arr = io.BytesIO()
