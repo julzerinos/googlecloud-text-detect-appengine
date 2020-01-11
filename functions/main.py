@@ -46,7 +46,7 @@ def gcf1_rescale(event, context):
         )
 
     # Debug logging
-    if os.environ['DEBUG']:
+    if os.environ['DEBUG'] == '1':
         print(f'Success: {name} scaled and saved to bucket-2')
 
 
@@ -62,7 +62,7 @@ def gcf2_inform(event, context):
         )
 
     # Debug logging
-    if os.environ['DEBUG']:
+    if os.environ['DEBUG'] == '1':
         print(f'Published message for {event["name"]}')
 
 
@@ -79,7 +79,7 @@ def gcf3_vision(event, context):
     texts = response.text_annotations
 
     # Debug logging
-    if os.environ['DEBUG']:
+    if os.environ['DEBUG'] == '1':
         print(texts)
 
 
