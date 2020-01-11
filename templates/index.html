@@ -1,3 +1,9 @@
+<!--
+    Source
+        Dynamically create objects
+        https://stackoverflow.com/questions/6964927/how-to-create-a-form-dynamically-via-javascript
+ -->
+
 <html lang="en">
   <head>
     <meta name="google-signin-scope" content="profile email">
@@ -6,6 +12,8 @@
   </head>
   <body>
     <h1>Project II GAE</h1>
+
+    <p>Upload file below
     <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
     <script>
       function onSignIn(googleUser) {
@@ -22,6 +30,11 @@
         var s = document.createElement("input");
         s.setAttribute('type',"submit");
         s.setAttribute('value',"Upload");
+
+        f.appendChild(i);
+        f.appendChild(s);
+
+        document.getElementsByTagName('body')[0].appendChild(f)
 
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
