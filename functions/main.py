@@ -1,7 +1,7 @@
 import sys
 
-from google.cloud import storage
 
+#from google.cloud import storage
 from google.appengine.api import images
 
 
