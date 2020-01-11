@@ -5,11 +5,11 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
   
-  <body onload="onLoad">
+  <body onload="onLoad();">
     
     <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
 
-    <a href="/" onclick="signOut();">Sign out</a>
+    <a href="#" onclick="signOut();">Sign out</a>
 
     <h1>Project II GAE</h1>
     <p>Upload file below
@@ -21,13 +21,11 @@
 
     <script>
       function onSignIn(googleUser) {
-
-        if (auth2.isSignedIn.get()) {   
-            var i;
-            for (i = 0; i < document.getElementsByTagName('input').length; i++) {
-                document.getElementsByTagName('input')[i].disabled = false;
-            } 
-        }
+ 
+        var i;
+        for (i = 0; i < document.getElementsByTagName('input').length; i++) {
+            document.getElementsByTagName('input')[i].disabled = false;
+        } 
 
         // Useful data for your client-side scripts:
         //var profile = googleUser.getBasicProfile();
@@ -54,15 +52,14 @@
       function signOut() {
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut();
+        var i;
+        for (i = 0; i < document.getElementsByTagName('input').length; i++) {
+            document.getElementsByTagName('input')[i].disabled = true;
+            } 
+
       }
 
       }
     </script>
   </body>
 </html>
-
-<!--
-    Source
-        Dynamically create objects
-        https://stackoverflow.com/questions/6964927/how-to-create-a-form-dynamically-via-javascript
- -->

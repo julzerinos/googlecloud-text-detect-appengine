@@ -10,3 +10,6 @@ handlers:
 - url: /.*
   secure: always
   script: auto
+
+- url: /static
+  static_dir: public
