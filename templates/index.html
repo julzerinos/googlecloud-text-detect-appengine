@@ -19,15 +19,18 @@
     <h1>Project II GAE</h1>
     <p>Upload file below
 
-    <form action = "/success" method = "post" enctype="multipart/form-data" disabled>  
-        <input type="file" name="file" />  
-        <input type = "submit" value="Upload">  
+    <form action = "/success" method = "post" enctype="multipart/form-data">  
+        <input type="file" name="file" disabled />  
+        <input type = "submit" value="Upload" disabled />  
     </form>  
 
     <script>
       function onSignIn(googleUser) {
 
-        document.getElementsByTagName('form')[0].disabled = false;
+        var i;
+        for (i = 0; i < document.getElementsByTagName('input').length; i++) {
+            document.getElementsByTagName('input')[i].disabled = false;
+        }
 
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
