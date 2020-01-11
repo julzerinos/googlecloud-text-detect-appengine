@@ -23,9 +23,9 @@ def gcf1_rescale(event, context):
 
     # im.thumbnail(512, Image.ANTIALIAS)
 
-    # target_bucket = storage_client.bucket('project-ii-gae-bucket-2')
-    # new_blob = target_bucket.blob(event['name'])
-    # new_blob.upload_from_string(im.tobytes())
+    target_bucket = storage_client.bucket('project-ii-gae-bucket-2')
+    new_blob = target_bucket.blob(event['name'])
+    new_blob.upload_from_string(im.tobytes())
 
     print(x, y)
     # print("Successfully resized and saved to bucket-2")
