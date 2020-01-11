@@ -1,4 +1,4 @@
-# sources
+# sources - GCF1
 #   google storage blob python ref
 #   https://googleapis.dev/python/storage/latest/blobs.html
 #
@@ -13,11 +13,22 @@
 #
 #   maintain aspect ratio
 #   https://stackoverflow.com/questions/273946/how-do-i-resize-an-image-using-pil-and-maintain-its-aspect-ratio
+#
+# sources - GCF2
+#   pubsub ref
+#   https://googleapis.dev/python/pubsub/latest/index.html
+#
+#   encoding as bytes
+#   https://stackoverflow.com/questions/7585435/best-way-to-convert-string-to-bytes-in-python-3
+
 
 import os
 import io
 
 from google.cloud import storage
+from google.cloud import pubsub_v1
+# google-cloud-vision 0.41.0
+from google.cloud import vision
 
 from PIL import Image
 
@@ -32,7 +43,7 @@ def gcf1_rescale(event, context):
 
     # Prepare buckets used in process
     source_bucket = storage_client.bucket(os.environ['BUCKET1'])
-    target_bucket = storage_client.bucket(['BUCKET2'])
+    target_bucket = storage_client.bucket(os.environ['BUCKET2'])
 
     # Get uploaded file
     blob = source_bucket.blob(name).download_as_string()
@@ -64,8 +75,14 @@ def gcf1_rescale(event, context):
 
 
 def gcf2_inform(event, context):
-    pass
+    publisher = pubsub_v1.PublisherClient()
+
+    publisher.publish(
+        'rescaled-images',
+        b'An image as been rescaled and placed in bucket-2',
+        file=event['name']
+        )
 
 
 def gcf3_vision(event, context):
-    pass
+    client = vision.ImageAnnotatorClient()
