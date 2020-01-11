@@ -41,7 +41,7 @@ def gcf1_rescale(event, context):
     # Create new blob and upload
     new_blob = target_bucket.blob(name)
     new_blob.upload_from_string(
-            im.tobytes(),  # content_type=event['contentType']
+            im.tobytes(), content_type=event['contentType']
         )
 
     # Debug logging
