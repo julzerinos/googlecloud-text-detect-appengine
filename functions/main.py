@@ -20,7 +20,13 @@
 #
 #   encoding as bytes
 #   https://stackoverflow.com/questions/7585435/best-way-to-convert-string-to-bytes-in-python-3
-
+#
+# sources - GCF3
+#   text detection
+#   https://cloud.google.com/vision/docs/ocr
+#
+#   relative paths to container names (pubsup topics)
+#   https://cloud.google.com/pubsub/docs/admin#resource_names
 
 import os
 import io
@@ -95,3 +101,15 @@ def gcf3_vision(event, context):
     # im = vision.types.Image(
     #     content=
     #     )
+
+    # response = client.text_detection(image=image)
+    # texts = response.text_annotations
+    # print('Texts:')
+
+    # for text in texts:
+    #     print('\n"{}"'.format(text.description))
+
+    #     vertices = (['({},{})'.format(vertex.x, vertex.y)
+    #                 for vertex in text.bounding_poly.vertices])
+
+    #     print('bounds: {}'.format(','.join(vertices)))
