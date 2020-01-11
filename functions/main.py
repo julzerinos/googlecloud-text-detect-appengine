@@ -14,6 +14,7 @@
 #   maintain aspect ratio
 #   https://stackoverflow.com/questions/273946/how-do-i-resize-an-image-using-pil-and-maintain-its-aspect-ratio
 
+import os
 import io
 
 from google.cloud import storage
@@ -30,8 +31,8 @@ def gcf1_rescale(event, context):
     storage_client = storage.Client()
 
     # Prepare buckets used in process
-    source_bucket = storage_client.bucket('project-ii-gae-bucket-1')
-    target_bucket = storage_client.bucket('project-ii-gae-bucket-2')
+    source_bucket = storage_client.bucket(os.environ['BUCKET1'])
+    target_bucket = storage_client.bucket(['BUCKET2'])
 
     # Get uploaded file
     blob = source_bucket.blob(name).download_as_string()
