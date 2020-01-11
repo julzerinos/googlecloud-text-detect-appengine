@@ -9,17 +9,17 @@ steps:
 
 # Deploy cloud functions
 
-# - name: "gcr.io/cloud-builders/gcloud"
-#   args: [
-#       'functions',
-#       'deploy',
-#       'gcf1_rescale',
-#       '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/$_GCF_REPO_BRANCH/paths/functions',
-#       '--trigger-bucket=project-ii-gae-bucket-1',
-#       '--runtime=python37',
-#       '--region=europe-west1',
-#       '--env-vars-file=env.yaml'
-#   ]
+- name: "gcr.io/cloud-builders/gcloud"
+  args: [
+      'functions',
+      'deploy',
+      'gcf1_rescale',
+      '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/$_GCF_REPO_BRANCH/paths/functions',
+      '--trigger-bucket=project-ii-gae-bucket-1',
+      '--runtime=python37',
+      '--region=europe-west1',
+      '--env-vars-file=env.yaml'
+  ]
 
 - name: "gcr.io/cloud-builders/gcloud"
   args: [
