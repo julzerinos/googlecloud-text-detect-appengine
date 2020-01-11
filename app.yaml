@@ -1,3 +1,7 @@
+# Source
+#   HTTPS always for appspot apps       
+#   https://stackoverflow.com/questions/5367974/https-only-in-google-app-engine
+
 - url: .*
   runtime: python37
   script: main.py
