@@ -36,11 +36,12 @@ def gcf1_rescale(event, context):
     # Rescale
     im = Image.open(io.BytesIO(blob), mode='r')
 
+    im.thumbnail(512, Image.ANTIALIAS)
+
+    # Save bytes
     byte_arr = io.BytesIO()
     im.save(byte_arr, format=im.format)
     byte_arr = byte_arr.getvalue()
-
-    # im.thumbnail(512, Image.ANTIALIAS)
 
     # Create new blob and upload
     new_blob = target_bucket.blob(name)
