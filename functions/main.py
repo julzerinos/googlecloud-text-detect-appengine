@@ -2,7 +2,8 @@ import sys
 
 
 #from google.cloud import storage
-from google.appengine.api import images
+#from google.appengine.api import images
+
 
 
 def gcf1_rescale(event, context):
