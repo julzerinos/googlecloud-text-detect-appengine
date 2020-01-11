@@ -77,7 +77,7 @@ def gcf2_inform(event, context):
     publisher = pubsub_v1.PublisherClient()
 
     publisher.publish(
-        'rescaled-images',
+        'projects/project-ii-gae/topics/rescaled-images',
         b'An image as been rescaled and placed in bucket-2',
         filename=event['name']
         )
