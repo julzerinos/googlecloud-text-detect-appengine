@@ -38,6 +38,7 @@ def gcf1_rescale(event, context):
 
     # Open and rescale
     im = Image.open(io.BytesIO(blob), mode='r')
+    img_format = im.format
 
     basewidth = 512
     x, y = im.size
@@ -47,7 +48,7 @@ def gcf1_rescale(event, context):
 
     # Save bytes
     byte_arr = io.BytesIO()
-    im.save(byte_arr, format=im.format)
+    im.save(byte_arr, format=img_format)
     byte_arr = byte_arr.getvalue()
 
     # Create new blob and upload
