@@ -70,7 +70,7 @@ def gcf3_vision(event, context):
 
     im = vision.types.Image(content=blob)
 
-    response = client.text_detection(image=image)
+    response = client.text_detection(image=im)
     texts = response.text_annotations
 
     print(texts)
