@@ -1,33 +1,3 @@
-# sources - GCF1
-#   google storage blob python ref
-#   https://googleapis.dev/python/storage/latest/blobs.html
-#
-#   google storage buckets python ref
-#   https://googleapis.dev/python/storage/latest/buckets.html
-#
-#   image manipulations with PIL and google storage
-#   https://stackoverflow.com/questions/55941068/change-image-size-with-pil-in-a-google-cloud-storage-bucket-from-a-vm-in-gcloud
-#
-#   blobs saved as strings of bytes
-#   https://stackoverflow.com/questions/46078088/how-to-upload-a-bytes-image-on-google-cloud-storage-from-a-python-script
-#
-#   maintain aspect ratio
-#   https://stackoverflow.com/questions/273946/how-do-i-resize-an-image-using-pil-and-maintain-its-aspect-ratio
-#
-# sources - GCF2
-#   pubsub ref
-#   https://googleapis.dev/python/pubsub/latest/index.html
-#
-#   encoding as bytes
-#   https://stackoverflow.com/questions/7585435/best-way-to-convert-string-to-bytes-in-python-3
-#
-# sources - GCF3
-#   text detection
-#   https://cloud.google.com/vision/docs/ocr
-#
-#   relative paths to container names (pubsup topics)
-#   https://cloud.google.com/pubsub/docs/admin#resource_names
-
 import os
 import io
 
@@ -96,20 +66,42 @@ def gcf3_vision(event, context):
 
     print(event, context)
 
-    # blob = bucket.blob(event['file']).download_as_string()
+    blob = bucket.blob(event['attributes']['filename']).download_as_string()
 
-    # im = vision.types.Image(
-    #     content=
-    #     )
+    im = vision.types.Image(content=blob)
 
-    # response = client.text_detection(image=image)
-    # texts = response.text_annotations
-    # print('Texts:')
+    response = client.text_detection(image=image)
+    texts = response.text_annotations
 
-    # for text in texts:
-    #     print('\n"{}"'.format(text.description))
+    print(texts)
 
-    #     vertices = (['({},{})'.format(vertex.x, vertex.y)
-    #                 for vertex in text.bounding_poly.vertices])
 
-    #     print('bounds: {}'.format(','.join(vertices)))
+# Sources - GCF1
+#   google storage blob python ref
+#   https://googleapis.dev/python/storage/latest/blobs.html
+#
+#   google storage buckets python ref
+#   https://googleapis.dev/python/storage/latest/buckets.html
+#
+#   image manipulations with PIL and google storage
+#   https://stackoverflow.com/questions/55941068/change-image-size-with-pil-in-a-google-cloud-storage-bucket-from-a-vm-in-gcloud
+#
+#   blobs saved as strings of bytes
+#   https://stackoverflow.com/questions/46078088/how-to-upload-a-bytes-image-on-google-cloud-storage-from-a-python-script
+#
+#   maintain aspect ratio
+#   https://stackoverflow.com/questions/273946/how-do-i-resize-an-image-using-pil-and-maintain-its-aspect-ratio
+#
+# Sources - GCF2
+#   pubsub ref
+#   https://googleapis.dev/python/pubsub/latest/index.html
+#
+#   encoding as bytes
+#   https://stackoverflow.com/questions/7585435/best-way-to-convert-string-to-bytes-in-python-3
+#
+# Sources - GCF3
+#   text detection
+#   https://cloud.google.com/vision/docs/ocr
+#
+#   relative paths to container names (pubsup topics)
+#   https://cloud.google.com/pubsub/docs/admin#resource_names
