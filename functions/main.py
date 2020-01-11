@@ -11,12 +11,12 @@ def gcf1_rescale(event, context):
     source_bucket = storage_client.bucket('project-ii-gae-bucket-1')
 
     blob = source_bucket.blob(event['name']).download_as_string()
-    im.Image.open(io.BytesIO(blob))
-    im.thumbnail(256, Image.ANTIALIAS)
+    im = Image.open(io.BytesIO(blob))
+    im.thumbnail(512, Image.ANTIALIAS)
 
     target_bucket = storage_client.bucket('project-ii-gae-bucket-2')
     new_blob = target_bucket.blob(event['name'])
     new_blob.upload_from_string(im.tobytes())    
 
-    print(f"BLOB ==== {blob}.")
+    print(f"Successfully resized and saved to bucket-2")
 
