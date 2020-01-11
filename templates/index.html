@@ -6,9 +6,23 @@
   </head>
   <body>
     <h1>Project II GAE</h1>
-    <div class="g-signin2" data-onsuccess="/upload" data-theme="dark"></div>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
     <script>
       function onSignIn(googleUser) {
+        
+        var f = document.createElement("form");
+        f.setAttribute('method',"post");
+        f.setAttribute('action',"submit.php");
+        f.setAttribute('enctype', "multipart/form-data");
+        
+        var i = document.createElement("input");
+        i.setAttribute('type',"file");
+        i.setAttribute('name',"file");
+
+        var s = document.createElement("input");
+        s.setAttribute('type',"submit");
+        s.setAttribute('value',"Upload");
+
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
         console.log("ID: " + profile.getId()); // Don't send this directly to your server!
