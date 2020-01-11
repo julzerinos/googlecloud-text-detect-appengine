@@ -2,18 +2,23 @@
 # General       https://cloud.google.com/cloud-build/docs/configuring-builds/create-basic-configuration
 # App Engine    https://cloud.google.com/source-repositories/docs/quickstart-triggering-builds-with-source-repositories
 # Functions     https://medium.com/google-cloud/triggering-cloud-functions-deployments-97691f9b5416
+# Git Deploy    https://cloud.google.com/functions/docs/deploying/repo
+# Git SRC frmt  https://cloud.google.com/sdk/gcloud/reference/functions/deploy#--source
 
 steps:
 
 - name: "gcr.io/cloud-builders/gcloud"
-  args: ["app", "deploy"]
-
-- name: "gcr.io/cloud-builders/gcloud"
   args: [
       'functions',
-      'deploy', 'gcf1_rescale',
-      '--source', 'https://source.cloud.google.com/project-ii-gae/project-II-gae/functions',
-      '--trigger-bucket', 'project-ii-gae-bucket-1'
+      'deploy',
+      'gcf1_rescale',
+      '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/dev/paths/functions',
+      '--trigger-bucket=project-ii-gae-bucket-1',
+      '--runtime=python37',
+      '--region=europe-west1',
   ]
 
-timeout: "1600s"
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ["app", "deploy"]
+  timeout: "1600s"
+
