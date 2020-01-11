@@ -40,8 +40,9 @@ def gcf1_rescale(event, context):
     im = Image.open(io.BytesIO(blob), mode='r')
 
     basewidth = 512
-    wpercent = (basewidth/float(img.size[0]))
-    hsize = int((float(img.size[1])*float(wpercent)))
+    x, y = im.size
+    wpercent = (basewidth/float(x))
+    hsize = int((float(y)*float(wpercent)))
     im = im.resize((basewidth, hsize), Image.ANTIALIAS)
 
     # Save bytes
