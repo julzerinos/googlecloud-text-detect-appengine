@@ -5,5 +5,5 @@
 runtime: python37
 
 handlers:
-- url: .*
+- url: /
   secure: always
