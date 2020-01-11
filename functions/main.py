@@ -85,3 +85,13 @@ def gcf2_inform(event, context):
 
 def gcf3_vision(event, context):
     client = vision.ImageAnnotatorClient()
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(os.environ['BUCKET2'])
+
+    print(event, context)
+
+    # blob = bucket.blob(event['file']).download_as_string()
+
+    # im = vision.types.Image(
+    #     content=
+    #     )
