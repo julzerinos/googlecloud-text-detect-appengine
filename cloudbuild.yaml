@@ -10,9 +10,10 @@ steps:
 
 - name: "gcr.io/cloud-builders/gcloud"
   args: [
-      'beta',
       'functions',
-      'deploy','gcf1_rescale',
+      'deploy', 'gcf1_rescale',
+      '--source', 'https://source.cloud.google.com/project-ii-gae/project-II-gae/functions',
+      '--trigger-bucket', 'project-ii-gae-bucket-1'
   ]
 
 timeout: "1600s"
