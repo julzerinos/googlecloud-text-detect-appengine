@@ -37,6 +37,7 @@ def gcf1_rescale(event, context):
     blob = source_bucket.blob(name).download_as_string()
 
     # Open and rescale
+    # Rescales width to 512 and maintains aspect ratio
     im = Image.open(io.BytesIO(blob), mode='r')
     img_format = im.format
 
@@ -59,3 +60,11 @@ def gcf1_rescale(event, context):
 
     # Debug logging
     print(f"Success: {name} scaled and saved to bucket-2")
+
+
+def gcf2_inform(event, context):
+    pass
+
+
+def gcf3_vision(event, context):
+    pass

@@ -1,1 +1,2 @@
 flask>=1.1.1
+google-cloud-storage>=1.24.1
