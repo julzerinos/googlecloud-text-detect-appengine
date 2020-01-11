@@ -12,6 +12,7 @@
 #   google sign-in
 #   https://developers.google.com/identity/sign-in/web
 
+
 import os
 
 from google.cloud import storage
@@ -23,20 +24,9 @@ from flask import render_template
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
-
-
-@app.route('/upload')
-def upload():
-    return render_template('upload.html')
-
-
-@app.route('/success', methods=['POST'])
-def success():
     if request.method == 'POST':
-
         f = request.files['file']
         if f:
             storage_client = storage.Client()
@@ -45,7 +35,22 @@ def success():
             blob = bucket.blob(f.filename)
             blob.upload_from_string(f.read())
 
-        return render_template('success.html')
+    return render_template('index.html')
+
+
+# @app.route('/success', methods=['POST'])
+# def success():
+#     if request.method == 'POST':
+
+#         f = request.files['file']
+#         if f:
+#             storage_client = storage.Client()
+#             bucket = storage_client.bucket('project-ii-gae-bucket-1')
+
+#             blob = bucket.blob(f.filename)
+#             blob.upload_from_string(f.read())
+
+#         return render_template('success.html')
 
 
 if __name__ == '__main__':

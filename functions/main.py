@@ -46,25 +46,30 @@ def gcf1_rescale(event, context):
         )
 
     # Debug logging
-    print(f"Success: {name} scaled and saved to bucket-2")
+    if os.environ['DEBUG']:
+        print(f'Success: {name} scaled and saved to bucket-2')
 
 
 def gcf2_inform(event, context):
+    # Create publisher object
     publisher = pubsub_v1.PublisherClient()
 
+    # Publish required info
     publisher.publish(
         'projects/project-ii-gae/topics/rescaled-images',
         b'An image as been rescaled and placed in bucket-2',
         filename=event['name']
         )
 
+    # Debug logging
+    if os.environ['DEBUG']:
+        print(f'Published message for {event["name"]}')
+
 
 def gcf3_vision(event, context):
     client = vision.ImageAnnotatorClient()
     storage_client = storage.Client()
     bucket = storage_client.bucket(os.environ['BUCKET2'])
-
-    print(event, context)
 
     blob = bucket.blob(event['attributes']['filename']).download_as_string()
 
@@ -73,7 +78,9 @@ def gcf3_vision(event, context):
     response = client.text_detection(image=im)
     texts = response.text_annotations
 
-    print(texts)
+    # Debug logging
+    if os.environ['DEBUG']:
+        print(texts)
 
 
 # Sources - GCF1
