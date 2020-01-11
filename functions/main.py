@@ -79,7 +79,7 @@ def gcf2_inform(event, context):
     publisher.publish(
         'rescaled-images',
         b'An image as been rescaled and placed in bucket-2',
-        file=event['name']
+        filename=event['name']
         )
 
 
