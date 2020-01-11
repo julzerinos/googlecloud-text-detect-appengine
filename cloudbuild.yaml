@@ -30,7 +30,7 @@ steps:
       '--trigger-bucket=project-ii-gae-bucket-2',
       '--runtime=python37',
       '--region=europe-west1',
-      '--set-env-vars BUCKET1=project-ii-gae-bucket-1,BUCKET2=project-ii-gae-bucket-2'
+      '--set-env-vars BUCKET1=project-ii-gae-bucket-1, BUCKET2=project-ii-gae-bucket-2'
   ]
 
 - name: "gcr.io/cloud-builders/gcloud"
@@ -42,7 +42,7 @@ steps:
       '--trigger-topic=rescaled-images',
       '--runtime=python37',
       '--region=europe-west1',
-      '--set-env-vars BUCKET1=project-ii-gae-bucket-1,BUCKET2=project-ii-gae-bucket-2'
+      '--set-env-vars BUCKET1=project-ii-gae-bucket-1, BUCKET2=project-ii-gae-bucket-2'
   ]
 
 # Deploy App Engine
