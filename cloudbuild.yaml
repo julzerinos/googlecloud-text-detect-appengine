@@ -9,27 +9,27 @@ steps:
 
 # Deploy cloud functions
 
-- name: "gcr.io/cloud-builders/gcloud"
-  args: [
-      'functions',
-      'deploy',
-      'gcf1_rescale',
-      '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/$_GCF_REPO_BRANCH/paths/functions',
-      '--trigger-bucket=project-ii-gae-bucket-1',
-      '--runtime=python37',
-      '--region=europe-west1',
-  ]
+# - name: "gcr.io/cloud-builders/gcloud"
+#   args: [
+#       'functions',
+#       'deploy',
+#       'gcf1_rescale',
+#       '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/$_GCF_REPO_BRANCH/paths/functions',
+#       '--trigger-bucket=project-ii-gae-bucket-1',
+#       '--runtime=python37',
+#       '--region=europe-west1',
+#   ]
 
-- name: "gcr.io/cloud-builders/gcloud"
-  args: [
-      'functions',
-      'deploy',
-      'gcf2_inform',
-      '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/$_GCF_REPO_BRANCH/paths/functions',
-      '--trigger-bucket=project-ii-gae-bucket-2',
-      '--runtime=python37',
-      '--region=europe-west1',
-  ]
+# - name: "gcr.io/cloud-builders/gcloud"
+#   args: [
+#       'functions',
+#       'deploy',
+#       'gcf2_inform',
+#       '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/$_GCF_REPO_BRANCH/paths/functions',
+#       '--trigger-bucket=project-ii-gae-bucket-2',
+#       '--runtime=python37',
+#       '--region=europe-west1',
+#   ]
 
 - name: "gcr.io/cloud-builders/gcloud"
   args: [
@@ -44,8 +44,8 @@ steps:
 
 # Deploy App Engine
 
-- name: "gcr.io/cloud-builders/gcloud"
-  args: ["app", "deploy"]
+# - name: "gcr.io/cloud-builders/gcloud"
+#   args: ["app", "deploy"]
 
-timeout: "1600s"
+# timeout: "1600s"
 
