@@ -3,6 +3,7 @@ import io
 
 from google.cloud import storage
 from google.cloud import datastore
+from google.cloud import kms_v1
 
 from flask import Flask
 from flask import request, render_template, redirect, url_for
@@ -37,6 +38,11 @@ Email will be sent anyway."""
             else:
                 message = "Upload successful. Email will be sent shortly."
 
+            # kms_client = kms_v1.KeyManagementServiceClient()
+            # # projects/project-ii-gae/locations/global/keyRings/project-ii-gae-keyring/cryptoKeys/bucket-encryption/cryptoKeyVersions/1
+            # key = kms_client.crypto_key_path_path('project-ii-gae', 'global', 'project-ii-gae-keyring', 'bucket-encryption')
+            # kms_client.encrypt(key, )
+
             im_id = int(str(time.time()).replace('.', ''))
             filename = f"{str(im_id)}.{f.filename.split('.')[-1]}"
 
@@ -61,7 +67,7 @@ Email will be sent anyway."""
                 'UPLOADER_EM': uploader,
                 'ORG_URL': 'N/A',
                 'RCL_URL': 'N/A',
-                'VISION_API_TEXT': 'N/A'
+                'VISION_API_TEXT': '0' * 1501
             })
             datastore_client.put(ent)
 
