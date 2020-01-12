@@ -60,10 +60,6 @@ def gcf1_rescale(event, context):
     ent['ORG_URL'] = blob.public_url
     datastore_client.put(ent)
 
-    # Debug logging
-    if os.environ['DEBUG'] == '1':
-        print(f'Success: {name} scaled and saved to bucket-2')
-
 
 def gcf2_inform(event, context):
     # Create publisher object
@@ -75,10 +71,6 @@ def gcf2_inform(event, context):
         b'An image as been rescaled and placed in bucket-2',
         filename=event['name']
         )
-
-    # Debug logging
-    if os.environ['DEBUG'] == '1':
-        print(f'Published message for {event["name"]}')
 
 
 def gcf3_vision(event, context):
@@ -103,18 +95,16 @@ def gcf3_vision(event, context):
     message = Mail(
         from_email='295013@student.mini.pw.edu.pl',
         to_emails=ent['UPLOADER_EM'],
-        subject='Your processed images',
+        subject='Your processed image',
         html_content=f"""
-<strong>The following text has been detected in your images:</strong>
+<strong>The following text has been detected in the rescaled imaged:</strong>
+<a href="{ent['ORG_IMG']}">Original Image</a>
+<a href="{ent['RSCL_IMG']}">Rescaled Image</a>
 <p>{texts}</p>"""
             )
 
     sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
     response = sg.send(message)
-
-    # Debug logging
-    if os.environ['DEBUG'] == '1':
-        print(texts)
 
 
 # Sources - GCF1
