@@ -25,11 +25,11 @@ def gcf1_rescale(event, context):
     target_bucket = storage_client.bucket(os.environ['BUCKET2'])
 
     # Get uploaded file
-    blob = source_bucket.blob(name).download_as_string()
+    blob = source_bucket.blob(name)
 
     # Open and rescale
     # Rescales width to 512 and maintains aspect ratio
-    im = Image.open(io.BytesIO(blob), mode='r')
+    im = Image.open(io.BytesIO(blob.download_as_string()), mode='r')
     img_format = im.format
 
     basewidth = 512

@@ -21,10 +21,10 @@ def index():
         f = request.files['file']
         if f:
 
-            # digital_digest = str(imagehash.average_hash(
-            #     Image.open(f.stream)
-            #     ))
-            digital_digest = '0'
+            digital_digest = str(imagehash.average_hash(
+                Image.open(f.stream)
+                ))
+            f.seek(0)
 
             datastore_client = datastore.Client()
 
