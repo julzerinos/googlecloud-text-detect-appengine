@@ -23,20 +23,20 @@ function onSignIn(googleUser) {
         //console.log("ID Token: " + id_token);
 }
 
-function onLoad() {
-    if (auth2.isSignedIn.get()) {   
-        var i;
-        for (i = 0; i < document.getElementsByTagName('input').length; i++) {
-            document.getElementsByTagName('input')[i].disabled = false;
-        } 
-    }
-}
+// function onLoad() {
+//     if (auth2.isSignedIn.get()) {   
+//         var i;
+//         for (i = 0; i < document.getElementsByTagName('input').length; i++) {
+//             document.getElementsByTagName('input')[i].disabled = false;
+//         } 
+//     }
+// }
 
-function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut();
-    var i;
-    for (i = 0; i < document.getElementsByTagName('input').length; i++) {
-        document.getElementsByTagName('input')[i].disabled = true;
-        } 
-}
+// function signOut() {
+//     var auth2 = gapi.auth2.getAuthInstance();
+//     auth2.signOut();
+//     var i;
+//     for (i = 0; i < document.getElementsByTagName('input').length; i++) {
+//         document.getElementsByTagName('input')[i].disabled = true;
+//         } 
+// }
