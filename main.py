@@ -18,6 +18,7 @@ app = Flask(__name__)
 def index():
     if request.method == 'POST':
         f = request.files['file']
+        print(request)
         if f:
 
             digital_digest = str(imagehash.average_hash(
@@ -26,14 +27,13 @@ def index():
 
             datastore_client = datastore.Client()
 
-            # qu = datastore.query.Query(datastore_client, kind='image')
             qu = datastore_client.query(kind='image')
             qu.add_filter('DIGITAL_DIGEST', '=', digital_digest)
             if len(list(qu.fetch())):
                 return redirect(url_for('fail'))
 
             im_id = int(str(time.time()).replace('.', ''))
-            filename = str(im_id) + f.filename.split('.')[-1]
+            filename = f"{str(im_id)}.{f.filename.split('.')[-1]}"
 
             storage_client = storage.Client()
             bucket = storage_client.bucket('project-ii-gae-bucket-1')
@@ -46,7 +46,6 @@ def index():
                 im_id
             )
             ent = datastore.Entity(key=key)
-
             uploader = request.args.get('post', 0, type=str)
             ent.update({
                 'DIGITAL_DIGEST': digital_digest,
