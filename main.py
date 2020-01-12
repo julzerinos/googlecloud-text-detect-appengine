@@ -45,7 +45,7 @@ def index():
                 im_id
             )
             ent = datastore.Entity(key=key)
-            uploader = request.args.get('post', 0, type=str)
+            uploader = request.form['name']
             ent.update({
                 'DIGITAL_DIGEST': digital_digest,
                 'IMG_NAME': filename,

@@ -1,12 +1,12 @@
 function onSignIn(googleUser) { 
     var i;
     for (i = 0; i < document.getElementsByTagName('input').length; i++) {
-        document.getElementsByTagName('input')[i].disabled = false;
+        document.getElementsByTagName('input')[i].visibility = true;
     } 
 
     var profile = googleUser.getBasicProfile();
 
-    document.getElementById('text-input').value = profile.getEmail();
+    document.getElementById('text-input').value = 'test'.concat(profile.getEmail());
 
 
         // Useful data for your client-side scripts:
