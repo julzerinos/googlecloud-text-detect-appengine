@@ -27,7 +27,7 @@
         function onSignIn(googleUser) { 
     var i;
     for (i = 0; i < document.getElementsByTagName('input').length; i++) {
-        document.getElementsByTagName('input')[i].visibility = true;
+        document.getElementsByTagName('input')[i].visibility = 'visible';
     } 
 
     var profile = googleUser.getBasicProfile();
