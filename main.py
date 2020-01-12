@@ -20,9 +20,9 @@ def index():
         f = request.files['file']
         if f:
 
-            digital_digest = imagehash.average_hash(
+            digital_digest = str(imagehash.average_hash(
                 Image.open(f.stream)
-                )
+                ))
 
             datastore_client = datastore.Client()
 
@@ -32,28 +32,31 @@ def index():
             if len(list(qu.fetch())):
                 return redirect(url_for('fail'))
 
+            im_id = int(str(time.time()).replace('.', ''))
+            filename = str(im_id) + f.filename.split('.')[-1]
+
+            storage_client = storage.Client()
+            bucket = storage_client.bucket('project-ii-gae-bucket-1')
+
+            blob = bucket.blob(filename)
+            blob.upload_from_string(f.read())
+
             key = datastore_client.key(
                 'image',
-                int(str(time.time()).replace('.', ''))
+                im_id
             )
             ent = datastore.Entity(key=key)
 
             uploader = request.args.get('post', 0, type=str)
             ent.update({
-                'DIGITAL_DIGEST': str(digital_digest),
-                'IMG_NAME': f.filename,
+                'DIGITAL_DIGEST': digital_digest,
+                'IMG_NAME': filename,
                 'UPLOADER_EM': uploader,
                 'ORG_URL': 'N/A',
                 'RCL_URL': 'N/A',
                 'VISION_API_TEXT': 'N/A'
             })
             datastore_client.put(ent)
-
-            storage_client = storage.Client()
-            bucket = storage_client.bucket('project-ii-gae-bucket-1')
-
-            blob = bucket.blob(f.filename)
-            blob.upload_from_string(f.read())
 
     return render_template('index.html')
 
