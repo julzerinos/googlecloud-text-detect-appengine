@@ -89,7 +89,7 @@ def gcf3_vision(event, context):
     qu = datastore_client.query(kind='image')
     qu.add_filter('IMG_NAME', '=', event['attributes']['filename'])
     ent = list(qu.fetch())[0]
-    ent['VISION_API_TEXT'] = str(texts)
+    ent['VISION_API_TEXT'] = str([t.description for t in texts])
     datastore_client.put(ent)
 
     message = Mail(

@@ -59,7 +59,7 @@ Email will be sent anyway."""
                 'image',
                 im_id
             )
-            ent = datastore.Entity(key=key)
+            ent = datastore.Entity(key=key, exclude_from_indexes=['VISION_API_TEXT'])
             uploader = request.form['email']
             ent.update({
                 'DIGITAL_DIGEST': digital_digest,
