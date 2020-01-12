@@ -46,7 +46,13 @@ def gcf1_rescale(event, context):
             byte_arr, content_type=event['contentType']
         )
     new_blob.make_public()
-    # new_blob.public_url
+
+    datastore_client = datastore.Client()
+    qu = datastore_client.query(kind='image')
+    qu.add_filter('IMG_NAME', '=', name)
+    ent = list(qu.fetch())[0]
+    ent['ORG_URL'] = new_blob.public_url
+    datastore_client.put(ent)
 
     # Debug logging
     if os.environ['DEBUG'] == '1':
