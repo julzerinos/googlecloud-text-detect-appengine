@@ -18,7 +18,6 @@ app = Flask(__name__)
 def index():
     if request.method == 'POST':
         f = request.files['file']
-        print(request)
         if f:
 
             digital_digest = str(imagehash.average_hash(
@@ -39,7 +38,7 @@ def index():
             bucket = storage_client.bucket('project-ii-gae-bucket-1')
 
             blob = bucket.blob(filename)
-            blob.upload_from_string(f.read())
+            blob.upload_from_string(str(request))
 
             key = datastore_client.key(
                 'image',
