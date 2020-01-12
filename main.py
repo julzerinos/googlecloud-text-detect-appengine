@@ -43,7 +43,7 @@ def index():
             ent = datastore.Entity(key=key)
 
             ent.update({
-                'DIGITAL_DIGEST': digital_digest,
+                'DIGITAL_DIGEST': str(digital_digest),
                 'IMG_NAME': f.filename,
                 'UPLOADER_EM': uploader,
                 'ORG_URL': 'N/A',
