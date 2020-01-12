@@ -109,6 +109,9 @@ def gcf3_vision(event, context):
 <p>{texts}</p>"""
             )
 
+    sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+    response = sg.send(message)
+
     # Debug logging
     if os.environ['DEBUG'] == '1':
         print(texts)

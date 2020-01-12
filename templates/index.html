@@ -23,16 +23,15 @@
     </div>
 
     <script>
-
         function onSignIn(googleUser) { 
-    var i;
-    for (i = 0; i < document.getElementsByTagName('input').length; i++) {
-        document.getElementsByTagName('input')[i].disabled = false;
-    } 
+            var i;
+            for (i = 0; i < document.getElementsByTagName('input').length; i++) {
+                document.getElementsByTagName('input')[i].disabled = false;
+            } 
 
-    var profile = googleUser.getBasicProfile();
+            var profile = googleUser.getBasicProfile();
 
-    document.getElementById('text-input').value = profile.getEmail();
+            document.getElementById('text-input').value = profile.getEmail();
         }
     </script>
 
