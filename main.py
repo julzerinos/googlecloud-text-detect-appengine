@@ -21,6 +21,7 @@ def index():
         f = request.files['file']
         if f:
 
+            filename = f.filename
             digital_digest = imagehash.average_hash(
                 Image.open(f.read())
                 )
@@ -43,7 +44,7 @@ def index():
 
             ent.update({
                 'DIGITAL_DIGEST': str(digital_digest),
-                'IMG_NAME': f.filename,
+                'IMG_NAME': filename,
                 'UPLOADER_EM': uploader,
                 'ORG_URL': 'N/A',
                 'RCL_URL': 'N/A',
