@@ -21,11 +21,10 @@ def index():
         f = request.files['file']
         if f:
 
-            data = io.BytesIO(f.read())
-
             digital_digest = imagehash.average_hash(
-                Image.open(data)
+                Image.open(f.read())
                 )
+            f.seek(0)
 
             # check if exists in datastore
 
@@ -56,7 +55,7 @@ def index():
             bucket = storage_client.bucket('project-ii-gae-bucket-1')
 
             blob = bucket.blob(f.filename)
-            blob.upload_from_string(data)
+            blob.upload_from_string(f.read())
 
     return render_template('index.html')
 
