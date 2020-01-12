@@ -11,15 +11,28 @@
 # sources - google auth & users
 #   google sign-in
 #   https://developers.google.com/identity/sign-in/web
+#
+# sources - images & hash
+#   hashing
+#   https://ourcodeworld.com/articles/read/1006/how-to-determine-whether-2-images-are-equal-or-not-with-the-perceptual-hash-in-python
+#
+# sources - datastore
+#   datastore python ref
+#   https://googleapis.dev/python/datastore/latest/index.html
 
-
-import os
+import io
+import time
 
 from google.cloud import storage
+from google.cloud import datastore
 
 from flask import Flask
 from flask import request
 from flask import render_template
+
+import imagehash
+from PIL import Image
+
 
 app = Flask(__name__)
 
@@ -29,6 +42,36 @@ def index():
     if request.method == 'POST':
         f = request.files['file']
         if f:
+
+            digital_digest = imagehash.phash(
+                Image.open(io.BytesIO(f), mode='r')
+                )
+
+            # check if exists in datastore
+
+            # if exists, inform frontend
+            # else
+
+            uploader = request.args.get('post', 0, type=str)
+
+            datastore_client = datastore.Client()
+
+            key = datastore_client.key(
+                'image',
+                int(str(time.time()).replace('.', ''))
+            )
+            ent = datastore.Entity(key=key)
+
+            ent.update({
+                'DIGITAL_DIGEST': digital_digest,
+                'IMG_NAME': file.filename,
+                'UPLOADER_EM': uploader,
+                'ORG_URL': 'N/A',
+                'RCL_URL': 'N/A',
+                'VISION_API_TEXT': 'N/A'
+            })
+            datastore_client.put(ent)
+
             storage_client = storage.Client()
             bucket = storage_client.bucket('project-ii-gae-bucket-1')
 
