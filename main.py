@@ -44,7 +44,7 @@ def index():
         if f:
 
             digital_digest = imagehash.phash(
-                Image.open(f.read(), mode='r')
+                Image.open(f.stream)
                 )
 
             # check if exists in datastore
