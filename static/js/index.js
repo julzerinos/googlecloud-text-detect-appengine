@@ -6,16 +6,8 @@ function onSignIn(googleUser) {
 
     var profile = googleUser.getBasicProfile();
 
-    xhr = new XMLHttpRequest();
-    xhr.open("POST", window.location.href, true)
-    xhr.setRequestHeader("Content-type", "application/json");
-    xhr.onreadystatechange = function () { 
-    if (xhr.readyState == 4 && xhr.status == 200) {
-        var json = JSON.parse(xhr.responseText);
-    }
-    }
-    var data = JSON.stringify({"email":profile.getEmail()});
-    xhr.send(data);
+    document.getElementById('text-input').value = profile.getEmail();
+
 
         // Useful data for your client-side scripts:
         //
