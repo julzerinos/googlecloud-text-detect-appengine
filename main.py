@@ -26,7 +26,7 @@ def index():
 
             datastore_client = datastore.Client()
 
-            qu = datastore_client.query()
+            qu = datastore_client.query(kind='image')
             qu.add_filter('DIGITAL_DIGEST', '=', digital_digest)
             if len(qu.fetch()):
                 return redirect(url_for('fail'))
