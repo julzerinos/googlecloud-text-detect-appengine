@@ -5,8 +5,7 @@ from google.cloud import storage
 from google.cloud import datastore
 
 from flask import Flask
-from flask import request
-from flask import render_template
+from flask import request, render_template, redirect, url_for
 
 import imagehash
 from PIL import Image
@@ -21,19 +20,16 @@ def index():
         f = request.files['file']
         if f:
 
-            filename = f.filename
             digital_digest = imagehash.average_hash(
                 Image.open(f.stream)
                 )
 
-            # check if exists in datastore
-
-            # if exists, inform frontend
-            # else
-
-            uploader = request.args.get('post', 0, type=str)
-
             datastore_client = datastore.Client()
+
+            qu = datastore_client.query('image')
+            qu.add_filter('DIGITAL_DIGEST', '=', digital_digest)
+            if len(qu.fetch()):
+                return redirect(url_for('fail'))
 
             key = datastore_client.key(
                 'image',
@@ -41,9 +37,10 @@ def index():
             )
             ent = datastore.Entity(key=key)
 
+            uploader = request.args.get('post', 0, type=str)
             ent.update({
                 'DIGITAL_DIGEST': str(digital_digest),
-                'IMG_NAME': filename,
+                'IMG_NAME': f.filename,
                 'UPLOADER_EM': uploader,
                 'ORG_URL': 'N/A',
                 'RCL_URL': 'N/A',
@@ -58,6 +55,11 @@ def index():
             blob.upload_from_string(f.read())
 
     return render_template('index.html')
+
+
+@app.route('/fail')
+def fail():
+    render_template('fail.html')
 
 
 # @app.route('/success', methods=['POST'])
