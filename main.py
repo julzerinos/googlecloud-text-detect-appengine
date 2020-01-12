@@ -16,6 +16,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    message = ""
     if request.method == 'POST':
         f = request.files['file']
         if f:
@@ -29,7 +30,11 @@ def index():
             qu = datastore_client.query(kind='image')
             qu.add_filter('DIGITAL_DIGEST', '=', digital_digest)
             if len(list(qu.fetch())):
-                return redirect(url_for('fail'))
+                message = """Warning: Photo already exists in database.
+Email will be sent anyway"""
+                # return redirect(url_for('fail'))
+            else:
+                message = "Upload successful. Email will be sent shortly."
 
             im_id = int(str(time.time()).replace('.', ''))
             filename = f"{str(im_id)}.{f.filename.split('.')[-1]}"
@@ -59,7 +64,7 @@ def index():
             })
             datastore_client.put(ent)
 
-    return render_template('index.html')
+    return render_template('index.html', message)
 
 
 @app.route('/fail')
