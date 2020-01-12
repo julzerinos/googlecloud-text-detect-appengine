@@ -23,9 +23,8 @@ def index():
 
             filename = f.filename
             digital_digest = imagehash.average_hash(
-                Image.open(f.read())
+                Image.open(f.stream)
                 )
-            f.seek(0)
 
             # check if exists in datastore
 
