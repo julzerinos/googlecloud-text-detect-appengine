@@ -68,26 +68,6 @@ Email will be sent anyway."""
     return render_template('index.html', message=message)
 
 
-@app.route('/fail')
-def fail():
-    return render_template('fail.html')
-
-
-# @app.route('/success', methods=['POST'])
-# def success():
-#     if request.method == 'POST':
-
-#         f = request.files['file']
-#         if f:
-#             storage_client = storage.Client()
-#             bucket = storage_client.bucket('project-ii-gae-bucket-1')
-
-#             blob = bucket.blob(f.filename)
-#             blob.upload_from_string(f.read())
-
-#         return render_template('success.html')
-
-
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
 

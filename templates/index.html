@@ -33,6 +33,16 @@
 
             document.getElementById('text-input').value = profile.getEmail();
         }
+
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                var i;
+                for (i = 0; i < document.getElementsByTagName('input').length; i++) {
+                    document.getElementsByTagName('input')[i].disabled = true;
+                } 
+    });
+  }
     </script>
 
   </body>
