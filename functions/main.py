@@ -98,8 +98,8 @@ def gcf3_vision(event, context):
         subject='Your processed image',
         html_content=f"""
 <strong>The following text has been detected in the rescaled imaged:</strong>
-<a href="{ent['ORG_IMG']}">Original Image</a>
-<a href="{ent['RSCL_IMG']}">Rescaled Image</a>
+<a href="{ent['ORG_URL']}">Original Image</a>
+<a href="{ent['RSCL_URL']}">Rescaled Image</a>
 <p>{texts}</p>"""
             )
 
