@@ -26,7 +26,8 @@ def index():
 
             datastore_client = datastore.Client()
 
-            qu = datastore_client.query(kind='image')
+            qu = datastore.query.Query(datastore_client, kind='image')
+            # qu = datastore_client.query(kind='image')
             qu.add_filter('DIGITAL_DIGEST', '=', digital_digest)
             if len(qu.fetch()):
                 return redirect(url_for('fail'))
@@ -59,7 +60,7 @@ def index():
 
 @app.route('/fail')
 def fail():
-    render_template('fail.html')
+    return render_template('fail.html')
 
 
 # @app.route('/success', methods=['POST'])

@@ -45,6 +45,9 @@ def gcf1_rescale(event, context):
     new_blob.upload_from_string(
             byte_arr, content_type=event['contentType']
         )
+    new_blob.make_public()
+    # new_blob.public_url
+
 
     # Debug logging
     if os.environ['DEBUG'] == '1':
