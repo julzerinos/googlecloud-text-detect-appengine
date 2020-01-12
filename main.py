@@ -16,11 +16,12 @@
 #   hashing
 #   https://ourcodeworld.com/articles/read/1006/how-to-determine-whether-2-images-are-equal-or-not-with-the-perceptual-hash-in-python
 #
+#   reading Flask FileStorage into Pillow
+#   https://stackoverflow.com/questions/17733133/loading-image-from-flasks-request-files-attribute-into-pil-image
 # sources - datastore
 #   datastore python ref
 #   https://googleapis.dev/python/datastore/latest/index.html
 
-import io
 import time
 
 from google.cloud import storage
@@ -64,7 +65,7 @@ def index():
 
             ent.update({
                 'DIGITAL_DIGEST': digital_digest,
-                'IMG_NAME': file.filename,
+                'IMG_NAME': f.filename,
                 'UPLOADER_EM': uploader,
                 'ORG_URL': 'N/A',
                 'RCL_URL': 'N/A',
