@@ -43,7 +43,7 @@ steps:
 #       '--runtime=python37',
 #       '--region=europe-west1',
 #       '--env-vars-file=env.yaml'
-  ]
+#   ]
 
 # Deploy App Engine
 
