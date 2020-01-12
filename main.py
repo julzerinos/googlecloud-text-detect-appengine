@@ -1,4 +1,5 @@
 import time
+import io
 
 from google.cloud import storage
 from google.cloud import datastore
@@ -20,8 +21,10 @@ def index():
         f = request.files['file']
         if f:
 
+            data = io.BytesIO(f.read())
+
             digital_digest = imagehash.average_hash(
-                Image.open(f.stream)
+                Image.open(data)
                 )
 
             # check if exists in datastore
@@ -53,7 +56,7 @@ def index():
             bucket = storage_client.bucket('project-ii-gae-bucket-1')
 
             blob = bucket.blob(f.filename)
-            blob.upload_from_string(f.read())
+            blob.upload_from_string(data)
 
     return render_template('index.html')
 
