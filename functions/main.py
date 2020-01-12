@@ -8,6 +8,9 @@ from google.cloud import datastore
 
 from PIL import Image
 
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 
 def gcf1_rescale(event, context):
 
@@ -97,6 +100,15 @@ def gcf3_vision(event, context):
     ent['VISION_API_TEXT'] = str(texts)
     datastore_client.put(ent)
 
+    message = Mail(
+        from_email='295013@student.mini.pw.edu.pl',
+        to_emails=ent['UPLOADER_EM'],
+        subject='Your processed images',
+        html_content=f"""
+<strong>The following text has been detected in your images:</strong>
+<p>{texts}</p>"""
+            )
+
     # Debug logging
     if os.environ['DEBUG'] == '1':
         print(texts)
@@ -131,3 +143,6 @@ def gcf3_vision(event, context):
 #
 #   relative paths to container names (pubsup topics)
 #   https://cloud.google.com/pubsub/docs/admin#resource_names
+#
+#   sendgrid
+#   https://sendgrid.com/docs/for-developers/sending-email/v3-python-code-example/

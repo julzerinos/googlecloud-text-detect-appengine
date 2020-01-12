@@ -38,7 +38,10 @@ def index():
             bucket = storage_client.bucket('project-ii-gae-bucket-1')
 
             blob = bucket.blob(filename)
-            blob.upload_from_string(f.read())
+            blob.upload_from_string(
+                f.read(),
+                content_type=f.content_type
+                )
 
             key = datastore_client.key(
                 'image',
