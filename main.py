@@ -31,7 +31,7 @@ def index():
             qu.add_filter('DIGITAL_DIGEST', '=', digital_digest)
             if len(list(qu.fetch())):
                 message = """Warning: Photo already exists in database.
-Email will be sent anyway"""
+Email will be sent anyway."""
                 # return redirect(url_for('fail'))
             else:
                 message = "Upload successful. Email will be sent shortly."
@@ -64,7 +64,7 @@ Email will be sent anyway"""
             })
             datastore_client.put(ent)
 
-    return render_template('index.html', message)
+    return render_template('index.html', message=message)
 
 
 @app.route('/fail')
