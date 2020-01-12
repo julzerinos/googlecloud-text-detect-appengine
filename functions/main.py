@@ -48,7 +48,6 @@ def gcf1_rescale(event, context):
     new_blob.make_public()
     # new_blob.public_url
 
-
     # Debug logging
     if os.environ['DEBUG'] == '1':
         print(f'Success: {name} scaled and saved to bucket-2')
