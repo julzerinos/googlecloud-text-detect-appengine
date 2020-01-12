@@ -90,6 +90,13 @@ def gcf3_vision(event, context):
     response = client.text_detection(image=im)
     texts = response.text_annotations
 
+    datastore_client = datastore.Client()
+    qu = datastore_client.query(kind='image')
+    qu.add_filter('IMG_NAME', '=', event['attributes']['filename'])
+    ent = list(qu.fetch())[0]
+    ent['VISION_API_TEXT'] = str(texts)
+    datastore_client.put(ent)
+
     # Debug logging
     if os.environ['DEBUG'] == '1':
         print(texts)
