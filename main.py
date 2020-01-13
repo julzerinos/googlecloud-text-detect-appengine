@@ -41,7 +41,7 @@ Email will be sent anyway."""
             im_id = int(str(time.time()).replace('.', ''))
             filename = f"{str(im_id)}.{f.filename.split('.')[-1]}"
 
-            kms_client = kms_v1f.KeyManagementServiceClient()
+            kms_client = kms_v1.KeyManagementServiceClient()
             # projects/project-ii-gae/locations/global/keyRings/project-ii-gae-keyring/cryptoKeys/bucket-encryption/cryptoKeyVersions/1
             key = kms_client.crypto_key_path_path('project-ii-gae', 'global', 'project-ii-gae-keyring', 'bucket-encryption')
             enc_response = kms_client.encrypt(key, f.read())
