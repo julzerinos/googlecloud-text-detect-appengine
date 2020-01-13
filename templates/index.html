@@ -5,7 +5,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
   
-  <body>
+  <body onload="onLoad()">
     <div class="center">
     <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
 
@@ -13,7 +13,7 @@
 
     <h1>Project II GAE</h1>
 
-    <form action = "#" method = "post" enctype="multipart/form-data"> 
+    <form id="califormication" action="#" method="post" enctype="multipart/form-data"> 
         <p>Email to send to</p>
         <input value="" id="text-input" type="text" name="email" disabled />
         <input type="file" name="file" accept="image/*" disabled />  
@@ -23,6 +23,24 @@
     </div>
 
     <script>
+        function onLoad() {
+            var form = document.getElementById('califormication');
+            if (form.attachEvent) {
+                form.attachEvent("submit", processForm);
+            } else {
+                form.addEventListener("submit", processForm);
+            }
+    
+        function processForm(e) {
+            if (e.preventDefault) e.preventDefault();
+
+            if (auth2.isSignedIn.get()) {
+                return true
+            }
+
+            return false;
+        }
+
         function onSignIn(googleUser) { 
             var i;
             for (i = 0; i < document.getElementsByTagName('input').length; i++) {
