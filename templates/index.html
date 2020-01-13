@@ -30,10 +30,11 @@
             } else {
                 form.addEventListener("submit", processForm);
             }
+        }
     
         function processForm(e) {
             if (e.preventDefault) e.preventDefault();
-
+            var auth2 = gapi.auth2.getAuthInstance();
             if (auth2.isSignedIn.get()) {
                 return true
             }
