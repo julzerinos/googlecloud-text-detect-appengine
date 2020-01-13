@@ -41,18 +41,18 @@ Email will be sent anyway."""
             im_id = int(str(time.time()).replace('.', ''))
             filename = f"{str(im_id)}.{f.filename.split('.')[-1]}"
 
-            kms_client = kms_v1.KeyManagementServiceClient()
-            # projects/project-ii-gae/locations/global/keyRings/project-ii-gae-keyring/cryptoKeys/bucket-encryption/cryptoKeyVersions/1
-            key = kms_client.crypto_key_path_path('project-ii-gae', 'global', 'project-ii-gae-keyring', 'bucket-encryption')
-            enc_response = kms_client.encrypt(key, f.read())
-            dcr_response = kms_client.decrypt(key, enc_response.ciphertext)
+            # kms_client = kms_v1.KeyManagementServiceClient()
+            # # projects/project-ii-gae/locations/global/keyRings/project-ii-gae-keyring/cryptoKeys/bucket-encryption/cryptoKeyVersions/1
+            # key = kms_client.crypto_key_path_path('project-ii-gae', 'global', 'project-ii-gae-keyring', 'bucket-encryption')
+            # enc_response = kms_client.encrypt(key, f.read())
+            # dcr_response = kms_client.decrypt(key, enc_response.ciphertext)
 
             storage_client = storage.Client()
             bucket = storage_client.bucket('project-ii-gae-bucket-1')
 
             blob = bucket.blob(filename)
             blob.upload_from_string(
-                dcr_response,
+                f.read(),
                 content_type=f.content_type
                 )
 
@@ -95,6 +95,12 @@ if __name__ == '__main__':
 # sources - google auth & users
 #   google sign-in
 #   https://developers.google.com/identity/sign-in/web
+#
+#   js functionality
+#   https://developers.google.com/identity/sign-in/web/people
+#
+#   html form interception for authentication
+#   https://stackoverflow.com/questions/5384712/capture-a-form-submit-in-javascript
 #
 # sources - images & hash
 #   hashing
