@@ -38,20 +38,21 @@ Email will be sent anyway."""
             else:
                 message = "Upload successful. Email will be sent shortly."
 
-            # kms_client = kms_v1.KeyManagementServiceClient()
-            # # projects/project-ii-gae/locations/global/keyRings/project-ii-gae-keyring/cryptoKeys/bucket-encryption/cryptoKeyVersions/1
-            # key = kms_client.crypto_key_path_path('project-ii-gae', 'global', 'project-ii-gae-keyring', 'bucket-encryption')
-            # kms_client.encrypt(key, )
-
             im_id = int(str(time.time()).replace('.', ''))
             filename = f"{str(im_id)}.{f.filename.split('.')[-1]}"
+
+            kms_client = kms_v1f.KeyManagementServiceClient()
+            # projects/project-ii-gae/locations/global/keyRings/project-ii-gae-keyring/cryptoKeys/bucket-encryption/cryptoKeyVersions/1
+            key = kms_client.crypto_key_path_path('project-ii-gae', 'global', 'project-ii-gae-keyring', 'bucket-encryption')
+            enc_response = kms_client.encrypt(key, f.read())
+            dcr_response = kms_client.decrypt(key, enc_response.ciphertext)
 
             storage_client = storage.Client()
             bucket = storage_client.bucket('project-ii-gae-bucket-1')
 
             blob = bucket.blob(filename)
             blob.upload_from_string(
-                f.read(),
+                dcr_response,
                 content_type=f.content_type
                 )
 
@@ -105,3 +106,7 @@ if __name__ == '__main__':
 # sources - datastore
 #   datastore python ref
 #   https://googleapis.dev/python/datastore/latest/index.html
+#
+# sources - kms
+#   kms python reference
+#   https://googleapis.dev/python/cloudkms/latest/gapic/v1/api.html

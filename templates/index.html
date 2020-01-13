@@ -23,15 +23,6 @@
     </div>
 
     <script>
-        function onLoad() {
-            var form = document.getElementById('califormication');
-            if (form.attachEvent) {
-                form.attachEvent("submit", processForm);
-            } else {
-                form.addEventListener("submit", processForm);
-            }
-        }
-    
         function processForm(e) {
             if (e.preventDefault) e.preventDefault();
             var auth2 = gapi.auth2.getAuthInstance();
