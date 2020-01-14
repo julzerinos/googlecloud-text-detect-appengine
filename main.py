@@ -60,8 +60,8 @@ Email will be sent anyway."""
             filename = f"{str(im_id)}.{f.filename.split('.')[-1]}"
 
             data = None
-            with open(os.environ['ENV_VAR_FILE_PATH']) as f:
-                data = yaml.load(f, Loader=yaml.FullLoader)
+            with open(os.environ['ENV_VAR_FILE_PATH']) as y:
+                data = yaml.load(y, Loader=yaml.FullLoader)
 
             # Prepare bucket-1 connection for image upload
             storage_client = storage.Client()
