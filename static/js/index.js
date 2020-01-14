@@ -34,4 +34,5 @@ function signOut() {
             document.getElementsByTagName('input')[i].disabled = true;
         } 
     });
+    window.location.reload(false); 
 }
