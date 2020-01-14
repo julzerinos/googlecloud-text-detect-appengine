@@ -33,8 +33,9 @@ from google.cloud import datastore
 
 from PIL import Image
 
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 
 def gcf1_rescale(event, context):
@@ -119,21 +120,37 @@ def gcf3_vision(event, context):
     ent['VISION_API_TEXT'] = str([t.description for t in texts])
     datastore_client.put(ent)
 
-    # Prepare email message
-    message = Mail(
-        from_email='295013@student.mini.pw.edu.pl',
-        to_emails=ent['UPLOADER_EM'],
-        subject='Your processed image',
-        html_content=f"""
+    sender_email = "project.ii.gae.senderbot@gmail.com"
+    password = os.environ['GMAIL_APP_KEY']
+
+    message = MIMEMultipart("alternative")
+    message["Subject"] = "Your processed images"
+    message["From"] = "Project II GAE Senderbot"
+
+    # Create the plain-text and HTML version of your message
+    text = "Something failed"
+    email_html = f"""
 <a href="{ent['ORG_URL']}">Original Image</a>
 <a href="{ent['RSCL_URL']}">Rescaled Image</a>
 <strong>The following text has been detected in the rescaled image:</strong>
 <p>{texts}</p>"""
-            )
 
-    # Send email message using SendGrid
-    sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-    response = sg.send(message)
+    # Turn these into plain/html MIMEText objects
+    part1 = MIMEText(text, "plain")
+    part2 = MIMEText(email_html, "html")
+
+    # Add HTML/plain-text parts to MIMEMultipart message
+    # The email client will try to render the last part first
+    message.attach(part1)
+    message.attach(part2)
+
+    # Create secure connection with server and send email
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(
+            sender_email, ent['UPLOADER_EM'], message.as_string()
+        )
 
 
 # Sources - GCF1
