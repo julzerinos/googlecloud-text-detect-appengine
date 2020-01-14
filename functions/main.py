@@ -80,7 +80,7 @@ def gcf1_rescale(event, context):
     # Update datastore entity for the image
     datastore_client = datastore.Client()
     qu = datastore_client.query(kind='image')
-    qu.add_filter('IMG_NAME', '=', name)
+    qu.add_filter('APP_FILENAME', '=', name)
     ent = list(qu.fetch())[0]
     ent['RSCL_URL'] = new_blob.public_url
     ent['ORG_URL'] = blob.public_url
@@ -114,7 +114,7 @@ def gcf3_vision(event, context):
     # Update datastore entity for image
     datastore_client = datastore.Client()
     qu = datastore_client.query(kind='image')
-    qu.add_filter('IMG_NAME', '=', event['attributes']['filename'])
+    qu.add_filter('APP_FILENAME', '=', event['attributes']['filename'])
     ent = list(qu.fetch())[0]
     ent['VISION_API_TEXT'] = str([t.description for t in texts])
     datastore_client.put(ent)

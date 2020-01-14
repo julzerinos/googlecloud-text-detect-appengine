@@ -1,15 +1,17 @@
-# Source
-#   Setup for python37
-#   https://cloud.google.com/appengine/docs/standard/python3/config/appref
-#   HTTPS always for appspot apps       
-#   https://stackoverflow.com/questions/5367974/https-only-in-google-app-engine
+# App Engine config file
 
 runtime: python37
 
 handlers:
 - url: /.*
-  secure: always
+  secure: always  # Automatically redirects to HTTPS
   script: auto
 
 - url: /static
   static_dir: public
+
+# Source
+#   Setup for python37
+#   https://cloud.google.com/appengine/docs/standard/python3/config/appref
+#   HTTPS always for appspot apps       
+#   https://stackoverflow.com/questions/5367974/https-only-in-google-app-engine
