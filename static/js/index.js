@@ -2,6 +2,15 @@ function processForm(e) {
     if (e.preventDefault) e.preventDefault();
     var auth2 = gapi.auth2.getAuthInstance();
     if (auth2.isSignedIn.get()) {
+        var a = document.createElement('a');
+        a.href = "#";
+        a.onclick="signOut()";
+        t = "Sign Out";
+        a.appendChild(t);
+        document.getElementsByClassName("center")[0].appendChild(a);
+
+<a href="#" onclick="signOut()">Sign out</a>
+
         return true
     }
 

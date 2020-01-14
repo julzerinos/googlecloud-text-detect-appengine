@@ -48,11 +48,7 @@ echo "Initialized App Engine"
 gcloud app deploy
 echo "App deployed"
 
-gcloud functions deploy gcf1_rescale --source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/master/paths/functions --trigger-bucket=project-ii-gae-bucket-1 --runtime=python37 --env-vars-file=env.yaml
-gcloud functions deploy gcf2_inform --source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/master/paths/functions --trigger-bucket=project-ii-gae-bucket-2 --runtime=python37 --env-vars-file=env.yaml
-gcloud functions deploy gcf3_vision --source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/master/paths/functions --trigger-topic=rescaled-images --runtime=python37 --env-vars-file=env.yaml
+gcloud functions deploy gcf1_rescale --source="`pwd`/functions" --trigger-bucket="project-ii-gae-bucket-1" --runtime=python37 --env-vars-file=env.yaml
+gcloud functions deploy gcf2_inform --source="`pwd`/functions" --trigger-"bucket=project-ii-gae-bucket-2" --runtime=python37 --env-vars-file=env.yaml
+gcloud functions deploy gcf3_vision --source="`pwd`/functions" --trigger-topic="rescaled-images" --runtime=python37 --env-vars-file=env.yaml
 echo "GCF deployed"
-
-gcloud builds submit --config cloudbuild.yaml .
-# Triggers not supported in command line
-echo "Initialized Cloud Build"
