@@ -26,16 +26,17 @@
 import os
 import io
 
+import smtplib
+import ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 from google.cloud import storage
 from google.cloud import pubsub_v1
 from google.cloud import vision
 from google.cloud import datastore
 
 from PIL import Image
-
-import smtplib, ssl
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 
 
 def gcf1_rescale(event, context):
@@ -117,17 +118,17 @@ def gcf3_vision(event, context):
     qu = datastore_client.query(kind='image')
     qu.add_filter('APP_FILENAME', '=', event['attributes']['filename'])
     ent = list(qu.fetch())[0]
-    ent['VISION_API_TEXT'] = str([t.description for t in texts])
+    ent['VISION_API_TEXT'] = str(texts)
     datastore_client.put(ent)
 
+    # Prepare email
     sender_email = "project.ii.gae.senderbot@gmail.com"
     password = os.environ['GMAIL_APP_KEY']
-
     message = MIMEMultipart("alternative")
     message["Subject"] = "Your processed images"
     message["From"] = "Project II GAE Senderbot"
 
-    # Create the plain-text and HTML version of your message
+    # Create the plain-text and HTML versions of message
     text = "Something failed"
     email_html = f"""
 <a href="{ent['ORG_URL']}">Original Image</a>
@@ -140,7 +141,6 @@ def gcf3_vision(event, context):
     part2 = MIMEText(email_html, "html")
 
     # Add HTML/plain-text parts to MIMEMultipart message
-    # The email client will try to render the last part first
     message.attach(part1)
     message.attach(part2)
 
