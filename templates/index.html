@@ -3,6 +3,13 @@
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="968358953056-2h45jfa9pnc49t8oh5kbbc7cpnlngfnn.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="static/js/index.js"></script>
+    <style>
+        .center {
+            max-width: 500px;
+            margin: auto;
+        }
+    </style>
   </head>
   
   <body>
@@ -21,39 +28,6 @@
     </form>  
     <strong> {{ message }} </strong>
     </div>
-
-    <script>
-        function processForm(e) {
-            if (e.preventDefault) e.preventDefault();
-            var auth2 = gapi.auth2.getAuthInstance();
-            if (auth2.isSignedIn.get()) {
-                return true
-            }
-
-            return false;
-        }
-
-        function onSignIn(googleUser) { 
-            var i;
-            for (i = 0; i < document.getElementsByTagName('input').length; i++) {
-                document.getElementsByTagName('input')[i].disabled = false;
-            } 
-
-            var profile = googleUser.getBasicProfile();
-
-            document.getElementById('text-input').value = profile.getEmail();
-        }
-
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                var i;
-                for (i = 0; i < document.getElementsByTagName('input').length; i++) {
-                    document.getElementsByTagName('input')[i].disabled = true;
-                } 
-    });
-  }
-    </script>
 
   </body>
 </html>

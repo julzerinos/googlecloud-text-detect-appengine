@@ -1,3 +1,19 @@
+# App engine backend based on Flask
+#
+# View related sources and documentation at bottom of the file.
+#
+# = index =====================================================================
+#   - accepts GET and POST HTTP methods
+#   - in both cases renders the same template "index.html"
+#   - if the POST method is received
+#       - check if image has been sent
+#           - calculates hash for image
+#           - check if image exists in datastore based on hash
+#               - if so, prepare optional message to inform user
+#               - 
+#
+
+
 import time
 import io
 
@@ -21,23 +37,23 @@ def index():
     if request.method == 'POST':
         f = request.files['file']
         if f:
-
+            # Calculate the digital digest (hash) for the image
             digital_digest = str(imagehash.average_hash(
                 Image.open(f.stream)
                 ))
-            f.seek(0)
+            f.seek(0)  # Reset the f.stream to make it readable again
 
+            # Check datastore entities if digital digest exists
             datastore_client = datastore.Client()
-
             qu = datastore_client.query(kind='image')
             qu.add_filter('DIGITAL_DIGEST', '=', digital_digest)
             if len(list(qu.fetch())):
                 message = """Warning: Photo already exists in database.
 Email will be sent anyway."""
-                # return redirect(url_for('fail'))
             else:
                 message = "Upload successful. Email will be sent shortly."
 
+            # Parse filename based on timestamp
             im_id = int(str(time.time()).replace('.', ''))
             filename = f"{str(im_id)}.{f.filename.split('.')[-1]}"
 
@@ -47,28 +63,29 @@ Email will be sent anyway."""
             # enc_response = kms_client.encrypt(key, f.read())
             # dcr_response = kms_client.decrypt(key, enc_response.ciphertext)
 
+            # Prepare bucket-1 connection for image upload
             storage_client = storage.Client()
             bucket = storage_client.bucket('project-ii-gae-bucket-1')
-
             blob = bucket.blob(filename)
             blob.upload_from_string(
                 f.read(),
                 content_type=f.content_type
                 )
 
-            key = datastore_client.key(
-                'image',
-                im_id
-            )
-            ent = datastore.Entity(key=key, exclude_from_indexes=['VISION_API_TEXT'])
-            uploader = request.form['email']
+            # Create datastore entity and initialize values
+            key = datastore_client.key('image', im_id)
+            ent = datastore.Entity(
+                key=key,
+                exclude_from_indexes=['VISION_API_TEXT']  # for "TextProperty"
+                )
             ent.update({
                 'DIGITAL_DIGEST': digital_digest,
-                'IMG_NAME': filename,
-                'UPLOADER_EM': uploader,
+                'APP_FILENAME': filename,
+                'ORG_FILENAME': f.filename,
+                'UPLOADER_EM': request.form['email'],
                 'ORG_URL': 'N/A',
                 'RCL_URL': 'N/A',
-                'VISION_API_TEXT': '0' * 1501
+                'VISION_API_TEXT': '0' * 1501  # to initialize "TextProperty"
             })
             datastore_client.put(ent)
 

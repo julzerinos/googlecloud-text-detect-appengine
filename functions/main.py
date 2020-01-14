@@ -1,3 +1,28 @@
+# functions/main.py defines the google cloud functions used within the project.
+# All function bodies are found within this file.
+#
+# View related code sources and documentation at bottom of this file.
+#
+# = gcf1_rescale ==============================================================
+#   - triggered by new file in bucket-1
+#   - the related image is stored in memory
+#   - using PIL, rescaling is done on the image
+#   - rescaled image is stored in bucket-2
+#   - images are made public
+#   - datastore entity for entity is updated with pubic urls
+#
+# = gcf2_inform ===============================================================
+#   - once gcf1_rescale has placed the image within bucket-2,
+#     this function is triggered
+#   - a message is published in pub/sub topic rescaled-images
+#
+# = gcf3_vision ===============================================================
+#   - triggered by new message in pub/sub topic rescaled-images
+#   - stores related image in memory from bucket-2
+#   - Vision API is used to detect text appearing in image
+#   - datastore entity is updated with detected text
+#   - email is sent using SendGrid API, sending public URLS and detected text
+
 import os
 import io
 
@@ -13,7 +38,6 @@ from sendgrid.helpers.mail import Mail
 
 
 def gcf1_rescale(event, context):
-
     # Prepare rep variables
     name = event['name']
 
@@ -49,9 +73,11 @@ def gcf1_rescale(event, context):
             byte_arr, content_type=event['contentType']
         )
 
+    # Change image privacy to generate public link
     blob.make_public()
     new_blob.make_public()
 
+    # Update datastore entity for the image
     datastore_client = datastore.Client()
     qu = datastore_client.query(kind='image')
     qu.add_filter('IMG_NAME', '=', name)
@@ -74,17 +100,18 @@ def gcf2_inform(event, context):
 
 
 def gcf3_vision(event, context):
-    client = vision.ImageAnnotatorClient()
+    # Get the related image from the bucket
     storage_client = storage.Client()
     bucket = storage_client.bucket(os.environ['BUCKET2'])
-
     blob = bucket.blob(event['attributes']['filename']).download_as_string()
 
+    # Find texts within image using Vision API
+    vision_client = vision.ImageAnnotatorClient()
     im = vision.types.Image(content=blob)
-
-    response = client.text_detection(image=im)
+    response = vision_client.text_detection(image=im)
     texts = response.text_annotations
 
+    # Update datastore entity for image
     datastore_client = datastore.Client()
     qu = datastore_client.query(kind='image')
     qu.add_filter('IMG_NAME', '=', event['attributes']['filename'])
@@ -92,17 +119,19 @@ def gcf3_vision(event, context):
     ent['VISION_API_TEXT'] = str([t.description for t in texts])
     datastore_client.put(ent)
 
+    # Prepare email message
     message = Mail(
         from_email='295013@student.mini.pw.edu.pl',
         to_emails=ent['UPLOADER_EM'],
         subject='Your processed image',
         html_content=f"""
-<strong>The following text has been detected in the rescaled imaged:</strong>
 <a href="{ent['ORG_URL']}">Original Image</a>
 <a href="{ent['RSCL_URL']}">Rescaled Image</a>
+<strong>The following text has been detected in the rescaled image:</strong>
 <p>{texts}</p>"""
             )
 
+    # Send email message using SendGrid
     sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
     response = sg.send(message)
 
