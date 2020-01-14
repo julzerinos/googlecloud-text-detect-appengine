@@ -16,14 +16,12 @@
 #   - render index.html template with optional message
 
 import time
-import io
 
 from google.cloud import storage
 from google.cloud import datastore
-from google.cloud import kms_v1
 
 from flask import Flask
-from flask import request, render_template, redirect, url_for
+from flask import request, render_template
 
 import imagehash
 from PIL import Image
@@ -57,12 +55,6 @@ Email will be sent anyway."""
             # Parse filename based on timestamp
             im_id = int(str(time.time()).replace('.', ''))
             filename = f"{str(im_id)}.{f.filename.split('.')[-1]}"
-
-            # kms_client = kms_v1.KeyManagementServiceClient()
-            # # projects/project-ii-gae/locations/global/keyRings/project-ii-gae-keyring/cryptoKeys/bucket-encryption/cryptoKeyVersions/1
-            # key = kms_client.crypto_key_path_path('project-ii-gae', 'global', 'project-ii-gae-keyring', 'bucket-encryption')
-            # enc_response = kms_client.encrypt(key, f.read())
-            # dcr_response = kms_client.decrypt(key, enc_response.ciphertext)
 
             # Prepare bucket-1 connection for image upload
             storage_client = storage.Client()
