@@ -4,15 +4,16 @@
 #
 # = index =====================================================================
 #   - accepts GET and POST HTTP methods
-#   - in both cases renders the same template "index.html"
 #   - if the POST method is received
 #       - check if image has been sent
 #           - calculates hash for image
 #           - check if image exists in datastore based on hash
 #               - if so, prepare optional message to inform user
-#               - 
-#
-
+#               - else the messages informs of upload
+#           - unique image id based on current timestamp is created
+#           - image is uploaded to bucket-1
+#           - image entity is created in datastore
+#   - render index.html template with optional message
 
 import time
 import io
