@@ -59,6 +59,7 @@ Email will be sent anyway."""
             im_id = int(str(time.time()).replace('.', ''))
             filename = f"{str(im_id)}.{f.filename.split('.')[-1]}"
 
+            # Get bucket name from env variable
             data = None
             with open(os.environ['ENV_VAR_FILE_PATH']) as y:
                 data = yaml.load(y, Loader=yaml.FullLoader)

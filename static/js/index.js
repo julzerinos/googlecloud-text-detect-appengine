@@ -20,8 +20,8 @@ function onSignIn(googleUser) {
 
     var a = document.createElement('a');
     a.href = "#";
-    a.onclick="signOut()";
-    t = "Sign Out";
+    a.onclick = function () { signOut(); };
+    t = document.createTextNode("Sign Out");
     a.appendChild(t);
     document.getElementsByClassName("center")[0].appendChild(a);
 }
