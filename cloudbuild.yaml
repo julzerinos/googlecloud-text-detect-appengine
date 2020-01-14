@@ -43,6 +43,10 @@ steps:
 # Deploy App Engine
 
 - name: "gcr.io/cloud-builders/gcloud"
-  args: ["app", "deploy"]
+  args: [
+      "app", "deploy",
+      "--stop-previous-version",
+      "--promote"
+      ]
 
 timeout: "1600s"
