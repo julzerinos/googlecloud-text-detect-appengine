@@ -2,13 +2,10 @@
 
 echo "Enter project id: "
 read PROJECT_ID
-
-# Set project ID
 gcloud config set project $PROJECT_ID
 echo "Project set to project ID: " $PROJECT_ID
 
 # Enable APIs
-gcloud services enable appengine.googleapis.com
 gcloud services enable appengine.googleapis.com        
 gcloud services enable bigquery.googleapis.com         
 gcloud services enable bigquerystorage.googleapis.com  
@@ -36,8 +33,8 @@ gcloud services enable storage-component.googleapis.com
 gcloud services enable vision.googleapis.com
 echo "Enabled related APIs"
 
-gsutil mb gs://project-ii-gae-bucket-1/
-gsutil mb gs://project-ii-gae-bucket-2/
+gsutil mb gs://project-ii-gae-bucket-1/ -l EUROPE-WEST1
+gsutil mb gs://project-ii-gae-bucket-2/ -l EUROPE-WEST1
 echo "Created Buckets"
 
 gcloud pubsub topics create rescaled-images

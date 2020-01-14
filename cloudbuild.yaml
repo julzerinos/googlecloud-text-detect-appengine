@@ -13,7 +13,7 @@ steps:
       '--trigger-bucket=project-ii-gae-bucket-1',
       '--runtime=python37',
       '--region=europe-west1',
-      '--env-vars-file=env.yaml'
+      '--env-vars-file=static/env.yaml'
   ]
 
 - name: "gcr.io/cloud-builders/gcloud"
@@ -25,7 +25,7 @@ steps:
       '--trigger-bucket=project-ii-gae-bucket-2',
       '--runtime=python37',
       '--region=europe-west1',
-      '--env-vars-file=env.yaml'
+      '--env-vars-file=static/env.yaml'
   ]
 
 - name: "gcr.io/cloud-builders/gcloud"
@@ -37,7 +37,7 @@ steps:
       '--trigger-topic=rescaled-images',
       '--runtime=python37',
       '--region=europe-west1',
-      '--env-vars-file=env.yaml'
+      '--env-vars-file=static/env.yaml'
   ]
 
 # Deploy App Engine
