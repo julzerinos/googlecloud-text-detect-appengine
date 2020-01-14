@@ -1,8 +1,6 @@
 # App Engine config file
 
 runtime: python37
-env_variables:
-  ENV_VAR_FILE: "env.yaml"
 
 handlers:
 - url: /.*
@@ -12,8 +10,5 @@ handlers:
 - url: /static
   static_dir: public
 
-# Source
-#   Setup for python37
-#   https://cloud.google.com/appengine/docs/standard/python3/config/appref
-#   HTTPS always for appspot apps       
-#   https://stackoverflow.com/questions/5367974/https-only-in-google-app-engine
+env_variables:
+  ENV_VAR_FILE_PATH: 'static/env.yaml'

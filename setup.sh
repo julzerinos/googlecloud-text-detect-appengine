@@ -33,8 +33,16 @@ gcloud services enable storage-component.googleapis.com
 gcloud services enable vision.googleapis.com
 echo "Enabled related APIs"
 
-gsutil mb gs://project-ii-gae-bucket-1/ -l EUROPE-WEST1
-gsutil mb gs://project-ii-gae-bucket-2/ -l EUROPE-WEST1
+BUCKET1="bucket-1-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 54 | head -n 1)"
+BUCKET2="bucket-2-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 54 | head -n 1)"
+
+touch static/env.yaml
+printf "BUCKET1: '%s'\n" $BUCKET1 >| static/env.yaml
+printf "BUCKET2: '%s'\n" $BUCKET2 >> static/env.yaml
+printf "GMAIL_APP_KEY: '%s'\n" "rvkzzmvcqzgpvsvr" >> static/env.yaml
+
+gsutil mb gs://$BUCKET1/ -l EUROPE-WEST1
+gsutil mb gs://$BUCKET2/ -l EUROPE-WEST1
 echo "Created Buckets"
 
 gcloud pubsub topics create rescaled-images
