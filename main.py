@@ -24,7 +24,7 @@ from google.cloud import datastore
 from flask import Flask
 from flask import request, render_template
 
-import pyyaml
+import yaml
 
 import imagehash
 from PIL import Image

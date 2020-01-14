@@ -3,4 +3,4 @@ google-cloud-storage>=1.24.1
 ImageHash>=4.0
 Pillow>=7.0.0
 google-cloud-datastore>=1.10.0
-pyyaml>=5.3
+PyYAML>=5.3
