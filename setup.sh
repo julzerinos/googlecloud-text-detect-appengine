@@ -1,18 +1,27 @@
 #!/bin/bash
 
 # Bash script which automates setup in empty google project
-# Assumptions
+# Assumptions - these are required steps to be taken by the user
 #   - The project has been created and project id is known
-#   - Appropriate permissions are available to user
-#   - Billing is setup for the account
+#   - Appropriate permissions are available to user (at least Project Editor)
+#   - Billing is setup for the account/project
 #   - The repository has been cloned to the appropriate project folder
-#
+#   - The script is run in the cloned git repository/project folder
+#   - A consent screen is configured for the project
+#   - An OAuth Client key has been generated (see https://console.developers.google.com/apis/credentials)
+#       - In the field "authorized javascript origins" enter https://YOUR_PROJECT_ID.appspot.com
+#       - Or fill in this field with the appspot uri after app engine deployment
+# 
 # Notes
 #   - Due to the unstable and violent environment that is Google Cloud,
 #     please be prepared to debug any errors which the script may evoke
 
-echo "Enter project id: "
+echo "Enter Project ID:"
 read PROJECT_ID
+
+echo "Enter OAuth Client Key:"
+read CLIENT_ID
+
 gcloud config set project $PROJECT_ID
 echo "Project set to project ID: " $PROJECT_ID
 
@@ -62,7 +71,9 @@ touch static/env.yaml
 printf "BUCKET1: '%s'\n" $BUCKET1 >| static/env.yaml
 printf "BUCKET2: '%s'\n" $BUCKET2 >> static/env.yaml
 printf "GMAIL_APP_KEY: '%s'\n" "rvkzzmvcqzgpvsvr" >> static/env.yaml
+printf "SIGNIN_KEY: '%s'\n" $CLIENT_ID >> static/env.yaml
 echo
+
 echo "KMS & CME Initialization"
 gcloud kms keyrings create project-ii-gae-keyring --location europe-west1
 gcloud kms keys create bucket-encryption \
