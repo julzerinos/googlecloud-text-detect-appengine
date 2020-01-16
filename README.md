@@ -1,16 +1,20 @@
-# Project II - GAE for GCP course
+# Processing images using Cloud Functions in the Google App Engine environment
 
-## Processing images using Cloud Functions
-
-### Introduction
+## Introduction
 
 Google App Engine is yet another solution pulled from the never-ending catalogue of Google products,
-but this time it's for producing applications.
-The idea is simple: backend, frontend, side-end, whatever-end - GAE will host it and make it run perfectly.
-Unfortunately, that is rarely the case, as the Google platform often riddles the user with false errors or
-enjoys itself a casual self-entitled prank by disabling random components of the Google Cloud platform.
+ specifically created for producing applications.
+The idea is simple: backend, frontend, side-end, whatever-end - the solution will host it and strive
+ to run it perfectly.
+Unfortunately, that is rarely the case.
+The Google platform often riddles the user with false errors or allows itself a casual self-entitled prank 
+ by disabling random components of the Google Cloud platform every now and then.
 Alas, the terrible contrast between the marketing material and reality is a subject for another time.
 Let us get to the matter at hand - an example of a python3.7 runtime app hosted on the Google App Engine.
+
+## The Project Overview
+
+
 
 ## Sources
 
