@@ -57,6 +57,12 @@ Cloud Build deploys newer version of Cloud Functions on repo git push | ✓ | -
 Unit tests are implemented for backend components | ✗ | No tests are included in the project. Application works "as is"
 Code style | ✓ | Python code written according to Flake8, clutter removed from repository
 
+### Setting Up The Project
+
+Within the repository one may find the `setup.sh` shell script. 
+ More specific assumptions may be found within the comments of the files, but in general - the script 
+ may be used in an empty project to build the application out of the box.
+
 ## Sources
 
 #### Cloud Build
