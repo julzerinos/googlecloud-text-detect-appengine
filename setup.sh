@@ -8,7 +8,9 @@
 #   - The repository has been cloned to the appropriate project folder
 #   - The script is run in the cloned git repository/project folder
 #   - A consent screen is configured for the project
-#   - An OAuth Client key has been generated (see https://console.developers.google.com/apis/credentials)
+#   - An OAuth Client key has been generated
+#     (see https://console.developers.google.com/apis/credentials
+#     or APIs & Services > Credentials)
 #       - In the field "authorized javascript origins" enter https://YOUR_PROJECT_ID.appspot.com
 #       - Or fill in this field with the appspot uri after app engine deployment
 # 
@@ -22,7 +24,8 @@
 #   ./setup.sh PROJECT_ID CLIENT_ID
 #
 
-PROJECT_ID=$0
+PROJECT_ID=$1
+CLIENT_ID=$2
 
 gcloud config set project $PROJECT_ID
 echo "Project set to project ID: "$PROJECT_ID
@@ -73,7 +76,7 @@ touch static/env.yaml
 printf "BUCKET1: '%s'\n" $BUCKET1 >| static/env.yaml
 printf "BUCKET2: '%s'\n" $BUCKET2 >> static/env.yaml
 printf "GMAIL_APP_KEY: '%s'\n" "rvkzzmvcqzgpvsvr" >> static/env.yaml
-printf "SIGNIN_KEY: '%s'\n" $1 >> static/env.yaml
+printf "SIGNIN_KEY: '%s'\n" $2 >> static/env.yaml
 printf "PROJECT_ID: '%s'\n" $PROJECT_ID >> static/env.yaml
 echo
 

@@ -44,7 +44,7 @@ steps:
 
 - name: "gcr.io/cloud-builders/gcloud"
   args: [
-      "app", "deploy",
+      "app", "deploy", "app.yaml",
       "--stop-previous-version",
       "--promote"
       ]
