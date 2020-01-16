@@ -4,7 +4,13 @@
 
 ### Introduction
 
-Google App Engine is the Google product for producing applications 
+Google App Engine is yet another solution pulled from the never-ending catalogue of Google products,
+but this time it's for producing applications.
+The idea is simple: backend, frontend, side-end, whatever-end - GAE will host it and make it run perfectly.
+Unfortunately, that is rarely the case, as the Google platform often riddles the user with false errors or
+enjoys itself a casual self-entitled prank by disabling random components of the Google Cloud platform.
+Alas, the terrible contrast between the marketing material and reality is a subject for another time.
+Let us get to the matter at hand - an example of a python3.7 runtime app hosted on the Google App Engine.
 
 ## Sources
 
