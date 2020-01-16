@@ -41,7 +41,21 @@ The implementation of the above user flow takes certain liberties, but those are
 
 ### Project Requirements
 
-
+Requirement | Fulfilled | Notes
+--- | --- | ---
+Application works according to user flow | ✓ | -
+Application is described in a `README.md` | ✓ | This is it
+Users can log into the application using GCP accounts (restricted access). HTTPS only is supported. It is possible to log out | ✓ | GCP accounts are assumed to be all Google accounts. Authentication is shallow (file upload authentication is done in frontend). HTTPS is secured by built-in GAE mechanics
+App stores image files in a Cloud Storage bucket using unique identifiers. KMS is used to create Customer Managed Encryption on uplaoded files | ✓ | Timestamps are used as identifiers for images
+Datastore is used to keep information on *image uploader*, *image name*, *digital digest*, *signed url to original*, *signed url to rescaled* and *Vision API text* | ✓ | Digital digest (hash) is calculated based on bytes string
+Source code is stored in Google Source Repositories | ✓ | For sharing purposes, code is stored on GitHub repositories
+Google Cloud Function 1 stores and rescales images | ✓ | -
+Google Cloud Function 3 is triggered by pub/sub, uses Vision API to find text in image and sends an email to uploader | ✓ | -
+Cloud Build builds newer version of application when changes are commited to repo | ✓ | Solved with Cloud Build Triggers (beta)
+Cloud Build deploys newer version of application into GAE | ✓ | -
+Cloud Build deploys newer version of Cloud Functions on repo git push | ✓ | -
+Unit tests are implemented for backend components | ✗ | No tests are included in the project. Application works "as is"
+Code style | ✓ | Python code written according to Flake8, clutter removed from repository
 
 ## Sources
 
