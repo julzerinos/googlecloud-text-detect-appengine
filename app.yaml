@@ -10,5 +10,7 @@ handlers:
 - url: /static
   static_dir: public
 
+default_expiration: "1m 30s"
+
 env_variables:
   ENV_VAR_FILE_PATH: 'static/env.yaml'
