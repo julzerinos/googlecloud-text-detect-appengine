@@ -3,12 +3,12 @@
 runtime: python37
 
 handlers:
-- url: /stat
-  static_dir: stat
+- url: /static
+  static_dir: static
 
 - url: /.*
   secure: always  # Automatically redirects to HTTPS
   script: auto
 
 env_variables:
-  ENV_VAR_FILE_PATH: 'stat/env.yaml'
+  ENV_VAR_FILE_PATH: '/static/env.yaml'
