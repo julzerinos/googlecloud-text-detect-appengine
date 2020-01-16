@@ -90,7 +90,11 @@ Email will be sent anyway."""
             })
             datastore_client.put(ent)
 
-    return render_template('index.html', message=message)
+    return render_template(
+        'index.html',
+        message=message,
+        sign_in_key=data['SIGNIN_KEY']
+        )
 
 
 if __name__ == '__main__':

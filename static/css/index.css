@@ -3,7 +3,7 @@ body, html {
 }
 
 .bgimg {
-  background-image: url(https://pixabay.com/get/57e9d4474952a514f6d1867dda6d367a1c3cdae155596c48702872d5904ec250bc/architecture-1914309_1920.jpg);
+  background-image: url("static/img/bg.jpg");
   min-height: 100%;
   background-position: center;
   background-size: cover;
