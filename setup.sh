@@ -18,15 +18,14 @@
 #   - If setup has been done manually, please make sure each step has 
 #     been taken into account.
 #
+# Usage
+#   ./setup.sh PROJECT_ID CLIENT_ID
+#
 
-echo "Enter Project ID:"
-read PROJECT_ID
-
-echo "Enter OAuth Client Key:"
-read CLIENT_ID
+PROJECT_ID=$0
 
 gcloud config set project $PROJECT_ID
-echo "Project set to project ID: " $PROJECT_ID
+echo "Project set to project ID: "$PROJECT_ID
 
 echo "Activate related APIs"
 gcloud services enable appengine.googleapis.com        
@@ -74,7 +73,8 @@ touch static/env.yaml
 printf "BUCKET1: '%s'\n" $BUCKET1 >| static/env.yaml
 printf "BUCKET2: '%s'\n" $BUCKET2 >> static/env.yaml
 printf "GMAIL_APP_KEY: '%s'\n" "rvkzzmvcqzgpvsvr" >> static/env.yaml
-printf "SIGNIN_KEY: '%s'\n" $CLIENT_ID >> static/env.yaml
+printf "SIGNIN_KEY: '%s'\n" $1 >> static/env.yaml
+printf "PROJECT_ID: '%s'\n" $PROJECT_ID >> static/env.yaml
 echo
 
 echo "KMS & CME Initialization"
@@ -92,7 +92,7 @@ echo
 echo "App deployment"
 gcloud app create --project=$PROJECT_ID --region=europe-west
 echo "Initialized App Engine"
-gcloud app deploy app.yaml
+yes Y | gcloud app deploy app.yaml
 echo
 
 echo "GCF deployment"

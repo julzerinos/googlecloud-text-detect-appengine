@@ -95,7 +95,7 @@ def gcf2_inform(event, context):
 
     # Publish required info
     publisher.publish(
-        'projects/project-ii-gae/topics/rescaled-images',
+        f"projects/{os.environ['PROJECT_ID']}/topics/rescaled-images",
         b'An image as been rescaled and placed in bucket-2',
         filename=event['name']
         )
