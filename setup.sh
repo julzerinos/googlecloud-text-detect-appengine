@@ -83,6 +83,12 @@ gcloud kms keys create bucket-encryption \
   --location europe-west1 \
   --keyring project-ii-gae-keyring \
   --purpose encryption
+
+gsutil kms authorize \
+    -k projects/$PROJECT_ID/locations/europe-west1/keyRings/project-ii-gae-keyring/cryptoKeys/bucket-encryption
+gsutil kms encryption \
+    -k projects/$PROJECT_ID/locations/europe-west1/keyRings/project-ii-gae-keyring/cryptoKeys/bucket-encryption \
+    gs://$BUCKET1
 echo
 
 echo "PUB/SUB topic creation"
