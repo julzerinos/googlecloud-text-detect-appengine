@@ -152,36 +152,3 @@ def gcf3_vision(event, context):
             sender_email, ent['UPLOADER_EM'], message.as_string()
         )
 
-
-# Sources - GCF1
-#   google storage blob python ref
-#   https://googleapis.dev/python/storage/latest/blobs.html
-#
-#   google storage buckets python ref
-#   https://googleapis.dev/python/storage/latest/buckets.html
-#
-#   image manipulations with PIL and google storage
-#   https://stackoverflow.com/questions/55941068/change-image-size-with-pil-in-a-google-cloud-storage-bucket-from-a-vm-in-gcloud
-#
-#   blobs saved as strings of bytes
-#   https://stackoverflow.com/questions/46078088/how-to-upload-a-bytes-image-on-google-cloud-storage-from-a-python-script
-#
-#   maintain aspect ratio
-#   https://stackoverflow.com/questions/273946/how-do-i-resize-an-image-using-pil-and-maintain-its-aspect-ratio
-#
-# Sources - GCF2
-#   pubsub ref
-#   https://googleapis.dev/python/pubsub/latest/index.html
-#
-#   encoding as bytes
-#   https://stackoverflow.com/questions/7585435/best-way-to-convert-string-to-bytes-in-python-3
-#
-# Sources - GCF3
-#   text detection
-#   https://cloud.google.com/vision/docs/ocr
-#
-#   relative paths to container names (pubsup topics)
-#   https://cloud.google.com/pubsub/docs/admin#resource_names
-#
-#   sendgrid
-#   https://sendgrid.com/docs/for-developers/sending-email/v3-python-code-example/

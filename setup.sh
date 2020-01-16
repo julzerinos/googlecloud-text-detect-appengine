@@ -33,17 +33,31 @@ gcloud services enable storage-component.googleapis.com
 gcloud services enable vision.googleapis.com
 echo "Enabled related APIs"
 
-BUCKET1="bucket-1-$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 54 | head -n 1)"
-BUCKET2="bucket-2-$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 54 | head -n 1)"
+while true; do
+    BUCKET1="bucket-1-$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 54 | head -n 1)"
+    if gsutil mb -l EUROPE-WEST1 gs://$BUCKET1/; then
+        break;
+    fi
+done
+while true; do
+    BUCKET2="bucket-2-$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 54 | head -n 1)"
+    if  gsutil mb -l EUROPE-WEST1 gs://$BUCKET2/; then
+        break;
+    fi
+done
+echo "Created buckets with names "$BUCKET1" and "$BUCKET2
 
 touch static/env.yaml
 printf "BUCKET1: '%s'\n" $BUCKET1 >| static/env.yaml
 printf "BUCKET2: '%s'\n" $BUCKET2 >> static/env.yaml
 printf "GMAIL_APP_KEY: '%s'\n" "rvkzzmvcqzgpvsvr" >> static/env.yaml
 
-gsutil mb -l EUROPE-WEST1 gs://$BUCKET1/
-gsutil mb -l EUROPE-WEST1 gs://$BUCKET2/
-echo "Created buckets with names "$BUCKET1" and "$BUCKET2
+gcloud kms keyrings create project-ii-gae-keyring --location europe-west1
+
+gcloud kms keys create bucket-encryption \
+  --location europe-west1 \
+  --keyring project-ii-gae-keyring \
+  --purpose encryption
 
 gcloud pubsub topics create rescaled-images
 echo "Created PUB/SUB topic"
