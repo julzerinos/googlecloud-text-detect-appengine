@@ -15,6 +15,9 @@
 # Notes
 #   - Due to the unstable and violent environment that is Google Cloud,
 #     please be prepared to debug any errors which the script may evoke
+#   - If setup has been done manually, please make sure each step has 
+#     been taken into account.
+#
 
 echo "Enter Project ID:"
 read PROJECT_ID
