@@ -1,8 +1,12 @@
 # App engine backend based on Flask
 #
-# View related sources and documentation at bottom of the file.
+# General notes
+#   As the google app engine app.yaml configuration file only accepts
+#   singular env var, there is only one env var which points to a yaml
+#   file containg all the required "env var"s. These are stored in
+#   static/env.yaml
 #
-# = index =====================================================================
+# index() method general flow
 #   - accepts GET and POST HTTP methods
 #   - if the POST method is received
 #       - check if image has been sent
@@ -35,7 +39,14 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # Initialize upload message
     message = ""
+
+    # Get env var list from env var yaml file
+    data = None
+    with open(os.environ['ENV_VAR_FILE_PATH']) as y:
+        env_var = yaml.load(y, Loader=yaml.FullLoader)
+
     if request.method == 'POST':
         f = request.files['file']
         if f:
@@ -59,14 +70,9 @@ Email will be sent anyway."""
             im_id = int(str(time.time()).replace('.', ''))
             filename = f"{str(im_id)}.{f.filename.split('.')[-1]}"
 
-            # Get bucket name from env variable
-            data = None
-            with open(os.environ['ENV_VAR_FILE_PATH']) as y:
-                data = yaml.load(y, Loader=yaml.FullLoader)
-
             # Prepare bucket-1 connection for image upload
             storage_client = storage.Client()
-            bucket = storage_client.bucket(data['BUCKET1'])
+            bucket = storage_client.bucket(env_var['BUCKET1'])
             blob = bucket.blob(filename)
             blob.upload_from_string(
                 f.read(),
@@ -93,7 +99,7 @@ Email will be sent anyway."""
     return render_template(
         'index.html',
         message=message,
-        sign_in_key=data['SIGNIN_KEY']
+        sign_in_key=env_var['SIGNIN_KEY']
         )
 
 
