@@ -24,6 +24,11 @@ function onSignIn(googleUser) {
     t = document.createTextNode("Sign Out");
     a.appendChild(t);
     document.getElementsByClassName("bgimg")[0].appendChild(a);
+
+    var a = document.createElement('iframe');
+    a.src = "https://www.dailymotion.com/embed/video/x9viwg?autoPlay=1";
+    a.allow = "autoplay";
+    document.getElementsByTagName("body")[0].appendChild(a);
 }
 
 function signOut() {
