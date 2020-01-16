@@ -63,6 +63,15 @@ Within the repository one may find the `setup.sh` shell script.
  More specific assumptions may be found within the comments of the files, but in general - the script 
  may be used in an empty project to build the application out of the box.
 
+All that is required is the empty project ID and a Client ID, which may be created after configuring
+ the application consent form.
+
+Of course, due to the endless supply of fun and errors in the Google Cloud Platform, one should be
+ prepared for unexplainable errors which in most cases may be solved by restarting the process in
+ yet another empty project. 
+
+If one chooses to set up the project manually, the script file may serve as a collection of instructions.
+
 ## Sources
 
 #### Cloud Build
