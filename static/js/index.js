@@ -23,7 +23,7 @@ function onSignIn(googleUser) {
     a.onclick = function () { signOut(); };
     t = document.createTextNode("Sign Out");
     a.appendChild(t);
-    document.getElementsByClassName("center")[0].appendChild(a);
+    document.getElementsByClassName("bgimg")[0].appendChild(a);
 }
 
 function signOut() {
