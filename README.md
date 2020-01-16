@@ -14,7 +14,33 @@ Let us get to the matter at hand - an example of a python3.7 runtime app hosted 
 
 ## The Project Overview
 
-The project intent is as follows:
+### Intent
+
+The following technologies and skills are used:
+* Developing an application running on Google App Engine in Python 3.7 runtime
+* Using Google Source Repositories as source control system
+* Using Google Cloud Ruild for building container images and deployment automation
+* Using Google managed database technologies as data persistency, i.e. Cloud Datastore and Cloud Storage
+* Using Google Cloud Functions to act in response to events
+* Orchestrating Continuous Integration system to build application artefacts
+* Preparing proper deployment instrumentation
+
+### User Flow
+
+The user flow defined for the project is as follows:
+
+1. As a user I can navigate to a website where I can log in using GCP account credentials (users without valid GCP credentials cannot log into the system). 
+2. After successful login I can upload an image in JPG or PNG format and this image is stored in Cloud Storage bucket (see Note 2) 
+3. I have a Cloud Function GCF#1 with a Cloud Storage trigger that discovers that an image was uploaded to Storage bucket#1. Cloud Function scales down the picture and stores the result in Cloud Storage bucket#2. 
+4. There is another Cloud Function (GCF#2) that processes images from bucket#2. GCF#2 discovers transformed images stored in bucket#2 and puts the message in Pub/Sub channel that is a trigger for GCF#3. \
+5. GCF#3 makes a call to Vision API and discover text visible in the image. Result of Vision API call is stored in the Datastore. 
+6. Finally, GCF#3 should send an email with the link to the image to GCP user and. Email should inform the user about successful or not successful operation of image transformation. Email should contain signed URLs to original and transformed image. Email should also contain text discovered for this specific image by Vision API 
+7. I can press 'Logout' button to log out of the service. Once I press 'Logout' I'm navigated back to login/initial page where there is a "Login" button I can use to log back into the system. 
+
+The implementation of the above user flow takes certain liberties, but those are explained below.
+
+### Project Requirements
+
 
 
 ## Sources

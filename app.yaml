@@ -7,8 +7,5 @@ handlers:
   secure: always  # Automatically redirects to HTTPS
   script: auto
 
-- url: /static2
-  static_dir: public
-
 env_variables:
   ENV_VAR_FILE_PATH: 'static/env.yaml'
