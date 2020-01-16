@@ -11,4 +11,4 @@ handlers:
   script: auto
 
 env_variables:
-  ENV_VAR_FILE_PATH: 'static/env.yaml'
+  ENV_VAR_FILE_PATH: 'stat/env.yaml'

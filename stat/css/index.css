@@ -1,0 +1,41 @@
+body, html {
+  height: 100%
+}
+
+.bgimg {
+  background-image: url("static/img/bg.jpg");
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+.g-signin2 {
+  margin: 0 auto;
+  padding: 10px;
+}
+
+#project-title {
+  font-family: 'Raleway', sans-serif;
+  margin: auto;
+  width: 50%;
+  color: white;
+}
+
+p {
+  font-family: 'Raleway', sans-serif;
+  color: white;
+  margin: auto;
+  width: 80%;
+  padding: 20px 0 0 0;
+}
+
+form {
+  padding: 20px 0 0 0;
+  margin: auto auto auto 100px;
+  width: 50%;
+}
+
+form>input {
+  margin: auto;
+  width: 50%;
+}
