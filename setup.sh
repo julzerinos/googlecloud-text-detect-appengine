@@ -67,20 +67,7 @@ echo "Initialized App Engine"
 gcloud app deploy app.yaml
 echo "App deployed"
 
-gcloud functions deploy gcf1_rescale --source="`pwd`/functions" --trigger-bucket="project-ii-gae-bucket-1" --runtime=python37 --env-vars-file=env.yaml
-gcloud functions deploy gcf2_inform --source="`pwd`/functions" --trigger-"bucket=project-ii-gae-bucket-2" --runtime=python37 --env-vars-file=env.yaml
-gcloud functions deploy gcf3_vision --source="`pwd`/functions" --trigger-topic="rescaled-images" --runtime=python37 --env-vars-file=env.yaml
+gcloud functions deploy gcf1_rescale --source="`pwd`/functions" --trigger-bucket=$BUCKET1 --allow-unauthenticated --runtime=python37 --env-vars-file=env.yaml
+gcloud functions deploy gcf2_inform --source="`pwd`/functions" --trigger-bucket=$BUCKET2 --allow-unauthenticated --runtime=python37 --env-vars-file=env.yaml
+gcloud functions deploy gcf3_vision --source="`pwd`/functions" --trigger-topic="rescaled-images" --allow-unauthenticated --runtime=python37 --env-vars-file=env.yaml
 echo "GCF deployed"
-
-# UNSORTED
-
-gsutil kms authorize -p [PROJECT_STORING_OBJECTS] -k [KEY_RESOURCE]
-# Give KMS key to service account
-
-gcloud kms keyrings create keyring-name \
-  --location location
-
-gcloud kms keys create key-name \
-  --location location \
-  --keyring keyring-name \
-  --purpose encryption
