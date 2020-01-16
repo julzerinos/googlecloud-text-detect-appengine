@@ -14,6 +14,7 @@ Let us get to the matter at hand - an example of a python3.7 runtime app hosted 
 
 ## The Project Overview
 
+The project intent is as follows:
 
 
 ## Sources
