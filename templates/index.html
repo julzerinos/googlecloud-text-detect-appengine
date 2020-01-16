@@ -3,17 +3,13 @@
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="968358953056-2h45jfa9pnc49t8oh5kbbc7cpnlngfnn.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    
     <script src="static/js/index.js"></script>
-    <style>
-        .center {
-            max-width: 500px;
-            margin: auto;
-        }
-    </style>
+    <link rel="stylesheet" href="static/css/index.css">
   </head>
   
   <body>
-    <div class="center">
+  <div class="bgimg">
     <div 
         class="g-signin2" 
         data-onsuccess="onSignIn" 
@@ -21,15 +17,16 @@
         data-longtitle="true"
     ></div>
 
-    <h1>Project II GAE</h1>
+    <h1 id="project-title">text detector</h1>
+    
+    <p>Utilize Google App Engine to find text in your image.</p>
 
-    <form onSubmit="return processForm(e)" id="califormication" action="#" method="post" enctype="multipart/form-data"> 
-        <p>Email to send to</p>
-        <input value="" id="text-input" type="text" name="email" disabled />
-        <input type="file" name="file" accept="image/*" disabled />  
+    <form onSubmit="return processForm(e)" id="califormication" action="#" method="post" enctype="multipart/form-data">
+        <input value="" id="text-input" type="text" name="email" disabled required/>
+        <input type="file" name="file" accept="image/*" disabled required/>  
         <input type = "submit" value="Upload" disabled />  
     </form>  
-    <strong> {{ message }} </strong>
+    <p> {{ message }} </p>
     </div>
   </body>
 </html>
