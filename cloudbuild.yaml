@@ -47,7 +47,7 @@ steps:
   entrypoint: /bin/sh
   args:
   - -c
-  - 'pip3 install -r testing/requirements.txt && export PYTHONPATH="${PYTHONPATH}:`pwd`" && python testing/TestGCF.py'
+  - 'pip3 install -r testing/requirements.txt && python testing/TestGCF.py'
 
 ## deploy app engine
 
