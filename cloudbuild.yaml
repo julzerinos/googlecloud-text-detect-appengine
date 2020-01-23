@@ -42,14 +42,12 @@ steps:
 
 ## test cloud functions
 
-- name: 'python:3.7-slim'
-  id: Test
-  entrypoint: /bin/sh
-  args:
-  - -c
-  - 'pip3 install -r testing/requirements.txt && python testing/TestGCF.py'
-
-#  && export PYTHONPATH="${PYTHONPATH}:`pwd`"
+# - name: 'python:3.7-slim'
+#   id: Test
+#   entrypoint: /bin/sh
+#   args:
+#   - -c
+#   - 'pip3 install -r testing/requirements.txt && python testing/TestGCF.py'
 
 ## deploy app engine
 
@@ -59,5 +57,14 @@ steps:
 #       "--stop-previous-version",
 #       "--promote"
 #       ]
+
+## test cloud functions
+
+- name: 'python:3.7-slim'
+  id: Test
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - 'pip3 install -r testing/requirements.txt && python testing/TestFlask.py'
 
 # timeout: "1600s"
