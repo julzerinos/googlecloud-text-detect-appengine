@@ -12,7 +12,7 @@ import yaml
 
 
 def setUpModule():
-    os.environ["TEST_ID"] = str(os.getpid())
+    os.environ["TEST_ID"] = str(os.getppid())
 
 
 class TestGCF1(unittest.TestCase):
