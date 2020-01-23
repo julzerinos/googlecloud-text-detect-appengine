@@ -43,7 +43,6 @@ steps:
 # test cloud functions
 
 - name: 'python:3.7-slim'
-  id: Test
   entrypoint: /bin/sh
   args:
   - -c
@@ -61,7 +60,6 @@ steps:
 # test cloud functions
 
 - name: 'python:3.7-slim'
-  id: Test
   entrypoint: /bin/sh
   args:
   - -c
