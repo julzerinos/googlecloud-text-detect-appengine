@@ -99,7 +99,7 @@ gcloud pubsub topics create rescaled-images
 gcloud pubsub subscriptions create rescaled-images-test \
     --topic=projects/project-ii-gae/topics/rescaled-images \
     --topic-project=$PROJECT_ID
-# gcloud projects add-iam-policy-binding project-ii-gae --member "serviceAccount:project-ii-gae@appspot.gserviceaccount.com" --role roles/editor
+# gcloud projects add-iam-policy-binding project-ii-gae --member "serviceAccount:968358953056@cloudbuild.gserviceaccount.com" --role roles/pubsub.editor
 echo
 
 echo "App deployment"
