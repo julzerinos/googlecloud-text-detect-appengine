@@ -11,10 +11,6 @@ from PIL import Image
 import yaml
 
 
-def setUpModule():
-    os.environ["TEST_ID"] = str(os.getppid())
-
-
 class TestGCF1(unittest.TestCase):
     @classmethod
     def setUpClass(TestGCF1):
@@ -78,7 +74,7 @@ class TestGCF2(unittest.TestCase):
         img.save(byte_arr, format='PNG')
         byte_arr = byte_arr.getvalue()
 
-        new_blob = TestGCF2.bucket2.blob(f'testing_image_{os.environ["TEST_ID"]}.png')
+        new_blob = TestGCF2.bucket2.blob('testing_gcf2.png')
         new_blob.upload_from_string(
                 byte_arr, content_type='image/png'
             )
@@ -91,7 +87,7 @@ class TestGCF2(unittest.TestCase):
         )
         self.assertEqual(
             response.received_messages[0].message.attributes['filename'],
-            f'testing_image_{os.environ["TEST_ID"]}.png'
+            'testing_gcf2.png'
         )
 
     @classmethod
