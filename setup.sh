@@ -76,7 +76,7 @@ touch static/env.yaml
 printf "BUCKET1: '%s'\n" $BUCKET1 >| static/env.yaml
 printf "BUCKET2: '%s'\n" $BUCKET2 >> static/env.yaml
 printf "GMAIL_APP_KEY: '%s'\n" "rvkzzmvcqzgpvsvr" >> static/env.yaml
-printf "SIGNIN_KEY: '%s'\n" $2 >> static/env.yaml
+printf "SIGNIN_KEY: '%s'\n" $CLIENT_ID >> static/env.yaml
 printf "PROJECT_ID: '%s'\n" $PROJECT_ID >> static/env.yaml
 echo
 

@@ -3,3 +3,4 @@ google-cloud-storage>=1.24.1
 google-cloud-pubsub>=1.1.0
 google-cloud-vision>=0.41.0
 google-cloud-datastore>=1.10.0
+PyYAML>=5.3

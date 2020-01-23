@@ -43,7 +43,6 @@ def index():
     message = ""
 
     # Get env var list from env var yaml file
-    data = None
     with open(os.environ['ENV_VAR_FILE_PATH']) as y:
         env_var = yaml.load(y, Loader=yaml.FullLoader)
 
