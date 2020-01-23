@@ -49,6 +49,8 @@ steps:
   - -c
   - 'pip3 install -r testing/requirements.txt && python testing/TestGCF.py'
 
+#  && export PYTHONPATH="${PYTHONPATH}:`pwd`"
+
 ## deploy app engine
 
 # - name: "gcr.io/cloud-builders/gcloud"

@@ -72,10 +72,10 @@ class TestGCF2(unittest.TestCase):
             'top': TestGCF2.subscriber.topic_path(
                 env_var['PROJECT_ID'], 'rescaled-images')
         }
-        TestGCF2.subscriber.create_subscription(
-            TestGCF2.sub_path['sub'],
-            TestGCF2.sub_path['top']
-            )
+        # TestGCF2.subscriber.create_subscription(
+        #     TestGCF2.sub_path['sub'],
+        #     TestGCF2.sub_path['top']
+        #     )
 
         img = Image.new('RGB', (512, 512), color='red')
         byte_arr = io.BytesIO()
@@ -100,7 +100,7 @@ class TestGCF2(unittest.TestCase):
 
     @classmethod
     def tearDownClass(TestGCF2):
-        TestGCF2.subscriber.delete_subscription(TestGCF2.sub_path['sub'])
+        # TestGCF2.subscriber.delete_subscription(TestGCF2.sub_path['sub'])
 
         new_blob = TestGCF2.bucket2.blob(f'testing_image_{os.environ["TEST_ID"]}.png')
         new_blob.delete()

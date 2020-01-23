@@ -96,6 +96,9 @@ echo
 
 echo "PUB/SUB topic creation"
 gcloud pubsub topics create rescaled-images
+gcloud pubsub subscriptions create rescaled-images-test \
+    --topic=projects/project-ii-gae/topics/rescaled-images \
+    --topic-project=$PROJECT_ID
 echo
 
 echo "App deployment"
