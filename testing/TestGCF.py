@@ -92,7 +92,7 @@ class TestGCF2(unittest.TestCase):
 
     @classmethod
     def tearDownClass(TestGCF2):
-        new_blob = TestGCF2.bucket2.blob(f'testing_image_{os.environ["TEST_ID"]}.png')
+        new_blob = TestGCF2.bucket2.blob('testing_gcf2.png')
         new_blob.delete()
 
 
