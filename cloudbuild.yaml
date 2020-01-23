@@ -65,6 +65,6 @@ steps:
   entrypoint: /bin/sh
   args:
   - -c
-  - 'pip3 install -r testing/requirements.txt && export PYTHONPATH="${PYTHONPATH}:`pwd`" && python testing/TestFlask.py'
+  - 'pip3 install -r testing/requirements.txt && export PYTHONPATH="`pwd`" && python testing/TestFlask.py'
 
 # timeout: "1600s"
