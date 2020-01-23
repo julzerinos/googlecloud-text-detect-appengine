@@ -1,64 +1,64 @@
-# Cloud Build instruction file
+## Cloud Build instruction file
 
 steps:
 
-## deploy cloud functions
+# deploy cloud functions
 
-# - name: "gcr.io/cloud-builders/gcloud"
-#   args: [
-#       'functions',
-#       'deploy',
-#       'gcf1_rescale',
-#       '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/master/paths/functions',
-#       '--trigger-bucket=project-ii-gae-bucket-1',
-#       '--runtime=python37',
-#       '--region=europe-west1',
-#       '--env-vars-file=static/env.yaml'
-#   ]
+- name: "gcr.io/cloud-builders/gcloud"
+  args: [
+      'functions',
+      'deploy',
+      'gcf1_rescale',
+      '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/master/paths/functions',
+      '--trigger-bucket=project-ii-gae-bucket-1',
+      '--runtime=python37',
+      '--region=europe-west1',
+      '--env-vars-file=static/env.yaml'
+  ]
 
-# - name: "gcr.io/cloud-builders/gcloud"
-#   args: [
-#       'functions',
-#       'deploy',
-#       'gcf2_inform',
-#       '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/master/paths/functions',
-#       '--trigger-bucket=project-ii-gae-bucket-2',
-#       '--runtime=python37',
-#       '--region=europe-west1',
-#       '--env-vars-file=static/env.yaml'
-#   ]
+- name: "gcr.io/cloud-builders/gcloud"
+  args: [
+      'functions',
+      'deploy',
+      'gcf2_inform',
+      '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/master/paths/functions',
+      '--trigger-bucket=project-ii-gae-bucket-2',
+      '--runtime=python37',
+      '--region=europe-west1',
+      '--env-vars-file=static/env.yaml'
+  ]
 
-# - name: "gcr.io/cloud-builders/gcloud"
-#   args: [
-#       'functions',
-#       'deploy',
-#       'gcf3_vision',
-#       '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/master/paths/functions',
-#       '--trigger-topic=rescaled-images',
-#       '--runtime=python37',
-#       '--region=europe-west1',
-#       '--env-vars-file=static/env.yaml'
-#   ]
+- name: "gcr.io/cloud-builders/gcloud"
+  args: [
+      'functions',
+      'deploy',
+      'gcf3_vision',
+      '--source=https://source.developers.google.com/projects/project-ii-gae/repos/project-II-gae/moveable-aliases/master/paths/functions',
+      '--trigger-topic=rescaled-images',
+      '--runtime=python37',
+      '--region=europe-west1',
+      '--env-vars-file=static/env.yaml'
+  ]
 
-## test cloud functions
+# test cloud functions
 
-# - name: 'python:3.7-slim'
-#   id: Test
-#   entrypoint: /bin/sh
-#   args:
-#   - -c
-#   - 'pip3 install -r testing/requirements.txt && python testing/TestGCF.py'
+- name: 'python:3.7-slim'
+  id: Test
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - 'pip3 install -r testing/requirements.txt && python testing/TestGCF.py'
 
-## deploy app engine
+# deploy app engine
 
-# - name: "gcr.io/cloud-builders/gcloud"
-#   args: [
-#       "app", "deploy", "app.yaml",
-#       "--stop-previous-version",
-#       "--promote"
-#       ]
+- name: "gcr.io/cloud-builders/gcloud"
+  args: [
+      "app", "deploy", "app.yaml",
+      "--stop-previous-version",
+      "--promote"
+      ]
 
-## test cloud functions
+# test cloud functions
 
 - name: 'python:3.7-slim'
   id: Test
