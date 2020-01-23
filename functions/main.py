@@ -151,4 +151,3 @@ def gcf3_vision(event, context):
         server.sendmail(
             sender_email, ent['UPLOADER_EM'], message.as_string()
         )
-

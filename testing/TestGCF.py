@@ -5,8 +5,6 @@ import os
 
 from google.cloud import storage
 from google.cloud import pubsub_v1
-from google.cloud import vision
-from google.cloud import datastore
 
 from PIL import Image
 
@@ -106,10 +104,6 @@ class TestGCF2(unittest.TestCase):
 
         new_blob = TestGCF2.bucket2.blob(f'testing_image_{os.environ["TEST_ID"]}.png')
         new_blob.delete()
-
-
-class TestGCF3(unittest.TestCase):
-    pass
 
 
 if __name__ == '__main__':

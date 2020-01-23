@@ -2,7 +2,7 @@
 
 steps:
 
-# Deploy cloud functions
+## deploy cloud functions
 
 # - name: "gcr.io/cloud-builders/gcloud"
 #   args: [
@@ -40,13 +40,22 @@ steps:
 #       '--env-vars-file=static/env.yaml'
 #   ]
 
-# Deploy App Engine
+## test cloud functions
 
-- name: "gcr.io/cloud-builders/gcloud"
-  args: [
-      "app", "deploy", "app.yaml",
-      "--stop-previous-version",
-      "--promote"
-      ]
+- name: 'python:3.7-slim'
+  id: Test
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - 'pip3 install -r testing/requirements.txt && export PYTHONPATH="${PYTHONPATH}:`pwd`" && python testing/TestGCF.py'
 
-timeout: "1600s"
+## deploy app engine
+
+# - name: "gcr.io/cloud-builders/gcloud"
+#   args: [
+#       "app", "deploy", "app.yaml",
+#       "--stop-previous-version",
+#       "--promote"
+#       ]
+
+# timeout: "1600s"

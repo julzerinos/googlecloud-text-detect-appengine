@@ -18,6 +18,14 @@ function onSignIn(googleUser) {
 
     document.getElementById('text-input').value = profile.getEmail();
 
+    $.ajax({
+        data: {
+            loggedIn: profile.getEmail()
+        },
+        type: 'POST',
+        url: '/login'
+    })
+
     var a = document.createElement('a');
     a.href = "#";
     a.onclick = function () { signOut(); };
