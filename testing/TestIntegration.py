@@ -60,7 +60,7 @@ class TestIntegration(unittest.TestCase):
             content_type='multipart/form-data'
         )
 
-        sleep(10)
+        sleep(15)
 
     def test010_datastore_entries_exist(self):
         qu = self.datastore_client.query(kind='image')
