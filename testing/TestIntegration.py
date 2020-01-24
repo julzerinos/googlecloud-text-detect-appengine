@@ -4,16 +4,12 @@ from time import sleep
 
 import unittest
 
-from urllib.parse import urlparse as up
-
 from google.cloud import storage
 from google.cloud import datastore
 
 import requests as r
 
-from flask import session
-
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 import yaml
 
 from main import app
@@ -37,8 +33,10 @@ class TestIntegration(unittest.TestCase):
         TestIntegration.datastore_client = datastore.Client()
 
         TestIntegration.storage_client = storage.Client()
-        TestIntegration.bucket1 = TestIntegration.storage_client.bucket(env_var['BUCKET1'])
-        TestIntegration.bucket2 = TestIntegration.storage_client.bucket(env_var['BUCKET2'])
+        TestIntegration.bucket1 = TestIntegration.storage_client.bucket(
+            env_var['BUCKET1'])
+        TestIntegration.bucket2 = TestIntegration.storage_client.bucket(
+            env_var['BUCKET2'])
 
         img = Image.new('RGB', (512, 512), color='red')
 

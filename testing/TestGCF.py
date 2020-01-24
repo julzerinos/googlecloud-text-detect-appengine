@@ -1,7 +1,5 @@
 import unittest
 import io
-from random import randint
-import os
 
 from time import sleep
 
@@ -11,21 +9,6 @@ from google.cloud import pubsub_v1
 from PIL import Image
 
 import yaml
-
-
-def tearDownModule():
-    sleep(5)
-
-    # with open('static/env.yaml') as y:
-    #     env_var = yaml.load(y, Loader=yaml.FullLoader)
-
-    # bucket1 = TestGCF1.storage_client.bucket(env_var['BUCKET1'])
-    # bucket2 = TestGCF1.storage_client.bucket(env_var['BUCKET2'])
-
-    # blob1 = bucket1.blob('test_gcf.png')
-    # blob2 = bucket2.blob('test_gcf.png')
-    # blob1.delete()
-    # blob2.delete()
 
 
 class TestGCF1(unittest.TestCase):
@@ -79,14 +62,23 @@ class TestGCF2(unittest.TestCase):
         sleep(5)
 
     def test110_published_trigger(self):
-        response = self.subscriber.pull(self.sub_path['sub'], 100, return_immediately=True)
+        response = self.subscriber.pull(
+            self.sub_path['sub'], 100, return_immediately=True)
         while len(response.received_messages) < 1:
-            response = self.subscriber.pull(self.sub_path['sub'], 100, return_immediately=True)
-        self.subscriber.acknowledge(self.sub_path['sub'], [msg.ack_id for msg in response.received_messages])
+            response = self.subscriber.pull(
+                self.sub_path['sub'], 100, return_immediately=True)
+        self.subscriber.acknowledge(
+            self.sub_path['sub'],
+            [msg.ack_id for msg in response.received_messages]
+            )
 
         self.assertIn(
             'test_gcf.png',
-            [msg.message.attributes['filename'] for msg in response.received_messages]
+            [
+                msg.message.attributes['filename']
+                for
+                msg in response.received_messages
+                ]
         )
 
 

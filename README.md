@@ -86,6 +86,8 @@ The page is serviced through Flask (Python package). A session is created for th
 
 If an error appears in file uploading, the user will be redirected to an error page with the appropriate error code.
 
+The app is always serviced at `https` thanks to Google's built-in redirect system found in the `app.yaml` setup file.
+
 The backend for this upload (Flask) first validates the data for correctness. Then the digital digest is calculated
  (to check if image exists in the database). Afterwards appropriate steps are taken to upload the image to the first 
  bucket with a timestamp-based id. Datastore entity is initialized.
@@ -115,6 +117,12 @@ A simple SMTP server is set-up with a dedicated Google/Gmail account to send the
 
 ### Other Functionalities
 
+#### CME & KMS
+
+Customer-Managed Encryption is available through Google's KMS. A keyring/key is created for the project and permissions are
+ granted to the App Engine service account. Due to this, the service account will now always encrypt files uploaded to
+ bucket-1 are encrypted with this symmetric key.
+
 #### Cloudbuild
 
 A `cloudbuild.yaml` file is present in the repository. If the project is integrated with a Google Cloud Source Repository,
@@ -124,8 +132,8 @@ A `cloudbuild.yaml` file is present in the repository. If the project is integra
 
 #### Unit Tests
 
-Very basic unit tests (Python/unittest) are prepared for the GCFs, Flask and integration of both. Their existence is rather a use for
- presenting how Google Build may run these tests on `git push`.
+Very basic unit tests (Python/unittest) are prepared for the GCFs, Flask and integration of both. Their existence is rather
+ just a use for presenting how Google Build may run these tests on `git push`.
 
 Below is the list of unit tests.
 

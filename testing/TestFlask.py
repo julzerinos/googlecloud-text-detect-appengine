@@ -69,7 +69,11 @@ class TestFlask(unittest.TestCase):
         response = self.app_client.post(
             '/',
             data={
-                'file': (io.BytesIO(b'0' * (1000000 + 1)), 'test_flask_deployment.png'),
+                'file': (
+                    io.BytesIO(
+                        b'0' * (1000000 + 1)
+                        ), 'test_flask_deployment.png'
+                    ),
                 'email': 'project.ii.gae.senderbot@gmail.com',
                 'gid': 'positive-test-gid'
             },
@@ -84,7 +88,11 @@ class TestFlask(unittest.TestCase):
         response = self.app_client.post(
             '/',
             data={
-                'file': (io.BytesIO(b'0' * (100 - 1)), 'test_flask_deployment.png'),
+                'file': (
+                    io.BytesIO(
+                        b'0' * (100 - 1)
+                        ), 'test_flask_deployment.png'
+                    ),
                 'email': 'project.ii.gae.senderbot@gmail.com',
                 'gid': 'positive-test-gid'
             },

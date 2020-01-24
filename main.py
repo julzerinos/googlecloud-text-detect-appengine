@@ -70,7 +70,8 @@ def index():
             try:
                 im = Image.open(f.stream)
                 im.verify()
-            except:
+            # Using bare except due to lack of information on PIL exception
+            except:  # noqa
                 return redirect(url_for('error', message="err_not_image"))
             f.seek(0)  # Reset the f.stream to make it readable again
 
