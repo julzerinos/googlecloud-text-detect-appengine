@@ -82,13 +82,9 @@ class TestGCF2(unittest.TestCase):
             response = self.subscriber.pull(self.sub_path['sub'], 100, return_immediately=True)
         self.subscriber.acknowledge(self.sub_path['sub'], [msg.ack_id for msg in response.received_messages])
 
-        self.assertEqual(
-            response.received_messages[0].message.data,
-            b'An image as been rescaled and placed in bucket-2'
-        )
-        self.assertEqual(
-            response.received_messages[0].message.attributes['filename'],
-            'test_gcf.png'
+        self.assertIn(
+            'test_gcf.png',
+            [msg.message.attributes['filename'] for msg in response.received_messages]
         )
 
 
