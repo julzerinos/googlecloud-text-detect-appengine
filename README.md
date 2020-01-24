@@ -142,6 +142,8 @@ If one chooses to set up the project manually, the script file may serve as a co
 
 [pubsub ref](https://googleapis.dev/python/pubsub/latest/index.html)
 
+[pubsub synchron. pull](https://cloud.google.com/pubsub/docs/pull#synchronous_pull)
+
 [encoding as bytes](https://stackoverflow.com/questions/7585435/best-way-to-convert-string-to-bytes-in-python-3)
 
 ### GCF3
