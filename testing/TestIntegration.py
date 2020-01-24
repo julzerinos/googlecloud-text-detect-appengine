@@ -60,7 +60,7 @@ class TestIntegration(unittest.TestCase):
             content_type='multipart/form-data'
         )
 
-        sleep(15)
+        sleep(20)
 
     def test010_datastore_entries_exist(self):
         qu = self.datastore_client.query(kind='image')
@@ -111,7 +111,7 @@ class TestIntegration(unittest.TestCase):
 
     @classmethod
     def tearDownClass(TestIntegration):
-        sleep(5)
+        sleep(15)
 
         qu = TestIntegration.datastore_client.query(kind='image')
         qu.add_filter('ORG_FILENAME', '=', 'test_integration.png')

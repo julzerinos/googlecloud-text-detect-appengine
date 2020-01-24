@@ -2,15 +2,10 @@
 
 ## Introduction
 
-Google App Engine is yet another solution pulled from the never-ending catalogue of Google products,
- specifically created for producing applications.
-The idea is simple: backend, frontend, side-end, whatever-end - the solution will host it and strive
- to run it perfectly.
-Unfortunately, that is rarely the case.
-The Google platform often riddles the user with false errors or allows itself a casual self-entitled prank 
- by disabling random components of the Google Cloud platform every now and then.
-Alas, the terrible contrast between the marketing material and reality is a subject for another time.
-Let us get to the matter at hand - an example of a python3.7 runtime app hosted on the Google App Engine.
+This is an example application deployed on Google App Engine which involves other Google Cloud functionalities in runtime Python 3.7.
+Until the project is running, the app may be accessed at https://project-ii-gae.appspot.com/.
+
+An image may be uploaded after logging into a valid google account, after which the user receives an email to the specified email with text detected in the image.
 
 ## The Project Overview
 
@@ -54,23 +49,40 @@ Google Cloud Function 3 is triggered by pub/sub, uses Vision API to find text in
 Cloud Build builds newer version of application when changes are commited to repo | ✓ | Solved with Cloud Build Triggers (beta)
 Cloud Build deploys newer version of application into GAE | ✓ | -
 Cloud Build deploys newer version of Cloud Functions on repo git push | ✓ | -
-Unit tests are implemented for backend components | ✗ | No tests are included in the project. Application works "as is"
+Unit tests are implemented for backend components | ✓ | A few tests are supplied as an example to how Cloud Build may run them
 Code style | ✓ | Python code written according to Flake8, clutter removed from repository
 
 ### Setting Up The Project
 
 Within the repository one may find the `setup.sh` shell script. 
  More specific assumptions may be found within the comments of the files, but in general - the script 
- may be used in an empty project to build the application out of the box.
+ may be used in an empty project to build the project out of the box in a Google Cloud environment.
 
-All that is required is the empty project ID and a Client ID, which may be created after configuring
+The script may be run with `steup.sh [PROJECT_ID] [CLIENT_ID]`, 
+
+where the required fields are empty project ID and a Client ID, which may be created after configuring
  the application consent form.
 
-Of course, due to the endless supply of fun and errors in the Google Cloud Platform, one should be
- prepared for unexplainable errors which in most cases may be solved by restarting the process in
- yet another empty project. 
-
 If one chooses to set up the project manually, the script file may serve as a collection of instructions.
+
+## The Application Overview
+
+The following overview sections are set in order of the project requirments table.
+
+### The Application Accesspoint
+
+Once Google App Engine deploys the application, the following frontend may be accessed by the user.
+
+## Final Thoughts
+
+Google App Engine is yet another solution pulled from the never-ending catalogue of Google products,
+ specifically created for producing applications.
+The idea is simple: backend, frontend, side-end, whatever-end - the solution will host it and strive
+ to run it perfectly.
+Unfortunately, that is rarely the case.
+The Google platform often riddles the user with false errors or allows itself a casual self-entitled prank 
+ by disabling random components of the Google Cloud platform every now and then.
+Alas, the terrible contrast between the marketing material and reality is a subject for another time.
 
 ## Sources
 
