@@ -42,14 +42,14 @@ class TestGCF1(unittest.TestCase):
         im = Image.open(io.BytesIO(test_blob.download_as_string()), mode='r')
         self.assertEqual(im.size, (512, 512))
 
-    @classmethod
-    def tearDownClass(TestGCF1):
-        new_blob = TestGCF1.bucket1.blob('test_gcf1.png')
-        test_blob = TestGCF1.bucket2.blob('test_gcf1.png')
-        if new_blob.exists():
-            new_blob.delete()
-        if test_blob.exists():
-            test_blob.delete()
+    # @classmethod
+    # def tearDownClass(TestGCF1):
+    #     new_blob = TestGCF1.bucket1.blob('test_gcf1.png')
+    #     test_blob = TestGCF1.bucket2.blob('test_gcf1.png')
+    #     if new_blob.exists():
+    #         new_blob.delete()
+    #     if test_blob.exists():
+    #         test_blob.delete()
 
 
 class TestGCF2(unittest.TestCase):
