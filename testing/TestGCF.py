@@ -11,19 +11,19 @@ from PIL import Image
 import yaml
 
 
-def tearDownModule():
-    with open('static/env.yaml') as y:
-        env_var = yaml.load(y, Loader=yaml.FullLoader)
+# def tearDownModule():
+#     with open('static/env.yaml') as y:
+#         env_var = yaml.load(y, Loader=yaml.FullLoader)
 
-    bucket1 = TestGCF1.storage_client.bucket(env_var['BUCKET1'])
-    bucket2 = TestGCF1.storage_client.bucket(env_var['BUCKET2'])
+#     bucket1 = TestGCF1.storage_client.bucket(env_var['BUCKET1'])
+#     bucket2 = TestGCF1.storage_client.bucket(env_var['BUCKET2'])
 
-    blob1 = bucket1.blob('test_gcf1.png')
-    blob2 = bucket2.blob('test_gcf1.png')
-    blob3 = bucket2.blob('test_gcf2.png')
-    blob1.delete()
-    blob2.delete()
-    blob3.delete()
+#     blob1 = bucket1.blob('test_gcf1.png')
+#     blob2 = bucket2.blob('test_gcf1.png')
+#     blob3 = bucket2.blob('test_gcf2.png')
+#     blob1.delete()
+#     blob2.delete()
+#     blob3.delete()
 
 
 class TestGCF1(unittest.TestCase):
