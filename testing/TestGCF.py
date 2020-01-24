@@ -3,6 +3,8 @@ import io
 from random import randint
 import os
 
+from time import sleep
+
 from google.cloud import storage
 from google.cloud import pubsub_v1
 
@@ -11,19 +13,21 @@ from PIL import Image
 import yaml
 
 
-# def tearDownModule():
-#     with open('static/env.yaml') as y:
-#         env_var = yaml.load(y, Loader=yaml.FullLoader)
+def tearDownModule():
+    sleep(5)
 
-#     bucket1 = TestGCF1.storage_client.bucket(env_var['BUCKET1'])
-#     bucket2 = TestGCF1.storage_client.bucket(env_var['BUCKET2'])
+    with open('static/env.yaml') as y:
+        env_var = yaml.load(y, Loader=yaml.FullLoader)
 
-#     blob1 = bucket1.blob('test_gcf1.png')
-#     blob2 = bucket2.blob('test_gcf1.png')
-#     blob3 = bucket2.blob('test_gcf2.png')
-#     blob1.delete()
-#     blob2.delete()
-#     blob3.delete()
+    bucket1 = TestGCF1.storage_client.bucket(env_var['BUCKET1'])
+    bucket2 = TestGCF1.storage_client.bucket(env_var['BUCKET2'])
+
+    blob1 = bucket1.blob('test_gcf1.png')
+    blob2 = bucket2.blob('test_gcf1.png')
+    blob3 = bucket2.blob('test_gcf2.png')
+    blob1.delete()
+    blob2.delete()
+    blob3.delete()
 
 
 class TestGCF1(unittest.TestCase):
@@ -45,6 +49,8 @@ class TestGCF1(unittest.TestCase):
         new_blob.upload_from_string(
                 byte_arr, content_type='image/png'
             )
+
+        sleep(2.5)
 
     def test014_image_exists_in_bucket_2(self):
         test_blob = self.bucket2.blob('test_gcf1.png')
@@ -84,6 +90,8 @@ class TestGCF2(unittest.TestCase):
         new_blob.upload_from_string(
                 byte_arr, content_type='image/png'
             )
+
+        sleep(2.5)
 
     def test110_published_trigger(self):
         response = self.subscriber.pull(self.sub_path['sub'], 1, return_immediately=True)

@@ -117,8 +117,8 @@ Email will be sent anyway."""
                 'APP_FILENAME': filename,
                 'ORG_FILENAME': f.filename,
                 'UPLOADER_EM': request.form['email'],
-                'ORG_URL': 'N/A',
-                'RCL_URL': 'N/A',
+                'ORG_URL': '',
+                'RSCL_URL': '',
                 'VISION_API_TEXT': '0' * 1501  # to initialize "TextProperty"
             })
             datastore_client.put(ent)

@@ -2,6 +2,8 @@ import os
 import io
 import unittest
 
+from time import sleep
+
 from urllib.parse import urlparse as up
 
 from google.cloud import storage
@@ -135,6 +137,8 @@ class TestFlask(unittest.TestCase):
 
     @classmethod
     def tearDownClass(TestFlask):
+        sleep(2.5)
+
         test_blob1 = TestFlask.bucket1.blob('test_flask_deployment.png')
         test_blob2 = TestFlask.bucket2.blob('test_flask_deployment.png')
 
