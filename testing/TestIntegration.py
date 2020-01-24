@@ -34,6 +34,8 @@ class TestIntegration(unittest.TestCase):
         with open('static/env.yaml') as y:
             env_var = yaml.load(y, Loader=yaml.FullLoader)
 
+        TestIntegration.datastore_client = datastore.Client()
+
         TestIntegration.storage_client = storage.Client()
         TestIntegration.bucket1 = TestIntegration.storage_client.bucket(env_var['BUCKET1'])
         TestIntegration.bucket2 = TestIntegration.storage_client.bucket(env_var['BUCKET2'])
@@ -54,15 +56,14 @@ class TestIntegration(unittest.TestCase):
                 'email': 'project.ii.gae.senderbot@gmail.com',
                 'gid': 'positive-test-gid'
             },
-            follow_redirects=True,
+            follow_redirects=False,
             content_type='multipart/form-data'
         )
 
-        sleep(2.5)
+        sleep(10)
 
     def test010_datastore_entries_exist(self):
-        datastore_client = datastore.Client()
-        qu = datastore_client.query(kind='image')
+        qu = self.datastore_client.query(kind='image')
         qu.add_filter('ORG_FILENAME', '=', 'test_integration.png')
         ent = max(list(qu.fetch()), key=lambda x: x.id)
 
@@ -94,8 +95,7 @@ class TestIntegration(unittest.TestCase):
         )
 
     def test021_images_public(self):
-        datastore_client = datastore.Client()
-        qu = datastore_client.query(kind='image')
+        qu = self.datastore_client.query(kind='image')
         qu.add_filter('ORG_FILENAME', '=', 'test_integration.png')
         ent = max(list(qu.fetch()), key=lambda x: x.id)
 
@@ -108,6 +108,21 @@ class TestIntegration(unittest.TestCase):
         self.assertEqual(
             resp2.status_code, 200
         )
+
+    @classmethod
+    def tearDownClass(TestIntegration):
+        sleep(5)
+
+        qu = TestIntegration.datastore_client.query(kind='image')
+        qu.add_filter('ORG_FILENAME', '=', 'test_integration.png')
+        ent = max(list(qu.fetch()), key=lambda x: x.id)
+
+        test_blob1 = TestIntegration.bucket1.blob(ent['APP_FILENAME'])
+        test_blob2 = TestIntegration.bucket2.blob(ent['APP_FILENAME'])
+
+        TestIntegration.datastore_client.delete(ent.key)
+        test_blob1.delete()
+        test_blob2.delete()
 
 
 if __name__ == '__main__':

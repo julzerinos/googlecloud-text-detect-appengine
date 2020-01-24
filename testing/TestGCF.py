@@ -22,12 +22,10 @@ def tearDownModule():
     bucket1 = TestGCF1.storage_client.bucket(env_var['BUCKET1'])
     bucket2 = TestGCF1.storage_client.bucket(env_var['BUCKET2'])
 
-    blob1 = bucket1.blob('test_gcf1.png')
-    blob2 = bucket2.blob('test_gcf1.png')
-    blob3 = bucket2.blob('test_gcf2.png')
+    blob1 = bucket1.blob('test_gcf.png')
+    blob2 = bucket2.blob('test_gcf.png')
     blob1.delete()
     blob2.delete()
-    blob3.delete()
 
 
 class TestGCF1(unittest.TestCase):
@@ -45,7 +43,7 @@ class TestGCF1(unittest.TestCase):
         img.save(byte_arr, format='PNG')
         byte_arr = byte_arr.getvalue()
 
-        new_blob = TestGCF1.bucket1.blob('test_gcf1.png')
+        new_blob = TestGCF1.bucket1.blob('test_gcf.png')
         new_blob.upload_from_string(
                 byte_arr, content_type='image/png'
             )
@@ -53,13 +51,13 @@ class TestGCF1(unittest.TestCase):
         sleep(2.5)
 
     def test014_image_exists_in_bucket_2(self):
-        test_blob = self.bucket2.blob('test_gcf1.png')
+        test_blob = self.bucket2.blob('test_gcf.png')
         # Do not use blob.exists()
         # Returns False despite file existing in bucket
         self.assertIsNotNone(test_blob.download_as_string())
 
     def test015_rescale_success(self):
-        test_blob = self.bucket2.blob('test_gcf1.png')
+        test_blob = self.bucket2.blob('test_gcf.png')
         im = Image.open(io.BytesIO(test_blob.download_as_string()), mode='r')
         self.assertEqual(im.size, (512, 512))
 
@@ -70,9 +68,6 @@ class TestGCF2(unittest.TestCase):
         with open('static/env.yaml') as y:
             env_var = yaml.load(y, Loader=yaml.FullLoader)
 
-        TestGCF2.storage_client = storage.Client()
-        TestGCF2.bucket2 = TestGCF2.storage_client.bucket(env_var['BUCKET2'])
-
         TestGCF2.subscriber = pubsub_v1.SubscriberClient()
         TestGCF2.sub_path = {
             'sub': TestGCF2.subscriber.subscription_path(
@@ -81,22 +76,10 @@ class TestGCF2(unittest.TestCase):
                 env_var['PROJECT_ID'], 'rescaled-images')
         }
 
-        img = Image.new('RGB', (512, 512), color='red')
-        byte_arr = io.BytesIO()
-        img.save(byte_arr, format='PNG')
-        byte_arr = byte_arr.getvalue()
-
-        new_blob = TestGCF2.bucket2.blob('test_gcf2.png')
-        new_blob.upload_from_string(
-                byte_arr, content_type='image/png'
-            )
-
-        sleep(2.5)
-
     def test110_published_trigger(self):
-        response = self.subscriber.pull(self.sub_path['sub'], 1, return_immediately=True)
+        response = self.subscriber.pull(self.sub_path['sub'], 100, return_immediately=True)
         while len(response.received_messages) < 1:
-            response = self.subscriber.pull(self.sub_path['sub'], 1, return_immediately=True)
+            response = self.subscriber.pull(self.sub_path['sub'], 100, return_immediately=True)
         self.subscriber.acknowledge(self.sub_path['sub'], [msg.ack_id for msg in response.received_messages])
 
         self.assertEqual(
@@ -105,7 +88,7 @@ class TestGCF2(unittest.TestCase):
         )
         self.assertEqual(
             response.received_messages[0].message.attributes['filename'],
-            'test_gcf2.png'
+            'test_gcf.png'
         )
 
 

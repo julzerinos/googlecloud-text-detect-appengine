@@ -137,7 +137,7 @@ class TestFlask(unittest.TestCase):
 
     @classmethod
     def tearDownClass(TestFlask):
-        sleep(2.5)
+        sleep(5)
 
         test_blob1 = TestFlask.bucket1.blob('test_flask_deployment.png')
         test_blob2 = TestFlask.bucket2.blob('test_flask_deployment.png')
