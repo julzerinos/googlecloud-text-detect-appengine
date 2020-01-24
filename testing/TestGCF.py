@@ -16,16 +16,16 @@ import yaml
 def tearDownModule():
     sleep(5)
 
-    with open('static/env.yaml') as y:
-        env_var = yaml.load(y, Loader=yaml.FullLoader)
+    # with open('static/env.yaml') as y:
+    #     env_var = yaml.load(y, Loader=yaml.FullLoader)
 
-    bucket1 = TestGCF1.storage_client.bucket(env_var['BUCKET1'])
-    bucket2 = TestGCF1.storage_client.bucket(env_var['BUCKET2'])
+    # bucket1 = TestGCF1.storage_client.bucket(env_var['BUCKET1'])
+    # bucket2 = TestGCF1.storage_client.bucket(env_var['BUCKET2'])
 
-    blob1 = bucket1.blob('test_gcf.png')
-    blob2 = bucket2.blob('test_gcf.png')
-    blob1.delete()
-    blob2.delete()
+    # blob1 = bucket1.blob('test_gcf.png')
+    # blob2 = bucket2.blob('test_gcf.png')
+    # blob1.delete()
+    # blob2.delete()
 
 
 class TestGCF1(unittest.TestCase):
@@ -47,8 +47,8 @@ class TestGCF1(unittest.TestCase):
         new_blob.upload_from_string(
                 byte_arr, content_type='image/png'
             )
-        if not new_blob.exists():
-            sleep(5)
+
+        sleep(5)
 
     def test014_image_exists_in_bucket_2(self):
         test_blob = self.bucket2.blob('test_gcf.png')

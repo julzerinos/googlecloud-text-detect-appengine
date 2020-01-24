@@ -67,7 +67,7 @@ If one chooses to set up the project manually, the script file may serve as a co
 
 ## The Application Overview
 
-The following overview sections are set in order of the project requirments table.
+The following overview sections are set in order of the project requirements table.
 
 ### The Application Accesspoint
 
