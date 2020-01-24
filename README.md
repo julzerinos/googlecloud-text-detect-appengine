@@ -140,7 +140,8 @@ Below is the list of unit tests.
 * GCF
     * GCF1 - test if image was uploaded to second bucket (test014_image_exists_in_bucket_2)
     * GCF1 - test if image was rescaled properly (test015_rescale_success)
-    * GCF2 - test if message was properly published (test110_published_trigger)
+    * (Disabled) GCF2 - test if message was properly published (test110_published_trigger)
+        * Disabled due to broken Google pub/sub API. The API randomly fails to pull freshest messages
 * Flask
     * test if correct image file is successfully uploaded (test010_positive_form_post)
     * test if negative image file is unsuccessfully uploaded (test011_negative_form_post)
@@ -153,8 +154,6 @@ Below is the list of unit tests.
     * test if the datastore entity has populated fields (test010_datastore_entries_exist)
     * test if text has been detected in image (test015_vision_text)
     * test if the storage blob files are public (test021_images_public)
-
-
 
 ## Final Thoughts
 
