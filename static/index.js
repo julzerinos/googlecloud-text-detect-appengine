@@ -1,11 +1,22 @@
-function processForm(e) {
+      function processForm(e) {
     if (e.preventDefault) e.preventDefault();
     var auth2 = gapi.auth2.getAuthInstance();
     if (auth2.isSignedIn.get()) {
-        return true
+        
+        var myForm = document.getElementById('califormication');
+        var formData = new FormData(myForm);
+        formData.append("gid", auth2.currentUser.get().getAuthResponse().id_token);
+         
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && (xhr.status === 200 || xhr.status === 302)) {
+                window.location.replace(`${xhr.responseURL}`);
+            }
+        };
+        xhr.open('POST', '/', true);
+        xhr.send(formData);
     }
-
-    return false;
+    return true;
 }
 
 function onSignIn(googleUser) { 
@@ -20,7 +31,8 @@ function onSignIn(googleUser) {
 
     $.ajax({
         data: {
-            loggedIn: profile.getEmail()
+            type: 'in',
+            loggedIn: googleUser.getAuthResponse().id_token
         },
         type: 'POST',
         url: '/login'
@@ -32,6 +44,13 @@ function onSignIn(googleUser) {
     t = document.createTextNode("Sign Out");
     a.appendChild(t);
     document.getElementsByClassName("bgimg")[0].appendChild(a);
+
+    var form = document.getElementById('califormication');
+    if (form.attachEvent) {
+        form.attachEvent("submit", processForm);
+    } else {
+        form.addEventListener("submit", processForm);
+}
 }
 
 function signOut() {
@@ -42,5 +61,16 @@ function signOut() {
             document.getElementsByTagName('input')[i].disabled = true;
         } 
     });
+
+    var googleUser = auth2.currentUser.get()
+
+    $.ajax({
+        data: {
+            type: 'out',
+            loggedIn: googleUser.getAuthResponse().id_token
+        },
+        type: 'POST',
+        url: '/login'
+    })
     window.location.reload(false); 
 }
