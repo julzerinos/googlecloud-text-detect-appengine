@@ -47,8 +47,8 @@ class TestGCF1(unittest.TestCase):
         new_blob.upload_from_string(
                 byte_arr, content_type='image/png'
             )
-
-        sleep(2.5)
+        if not new_blob.exists():
+            sleep(5)
 
     def test014_image_exists_in_bucket_2(self):
         test_blob = self.bucket2.blob('test_gcf.png')
@@ -75,6 +75,8 @@ class TestGCF2(unittest.TestCase):
             'top': TestGCF2.subscriber.topic_path(
                 env_var['PROJECT_ID'], 'rescaled-images')
         }
+
+        sleep(5)
 
     def test110_published_trigger(self):
         response = self.subscriber.pull(self.sub_path['sub'], 100, return_immediately=True)

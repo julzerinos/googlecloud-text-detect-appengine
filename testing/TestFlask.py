@@ -4,11 +4,7 @@ import unittest
 
 from time import sleep
 
-from urllib.parse import urlparse as up
-
 from google.cloud import storage
-
-from flask import session
 
 from PIL import Image
 import yaml

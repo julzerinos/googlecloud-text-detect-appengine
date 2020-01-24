@@ -73,6 +73,81 @@ The following overview sections are set in order of the project requirments tabl
 
 Once Google App Engine deploys the application, the following frontend may be accessed by the user.
 
+![Frontend Image](/static/src/srcimg1.png "Frontend Image")
+
+The user must log in to be able to upload an image. After signing in with their Google account through OAuth,
+ the upload form becomes available. An image may be uploaded and optionally the recipient email may be changed.
+ After upload, the appropriate response is generated (error/success). Sign out is available or the user may repeat
+ the process.
+
+The page is serviced through Flask (Python package). A session is created for the logged in user to authorize uploads.
+ The form is intercepted upon submit and then posted by AJAX. This is relatively unstable, but should pass for a small
+ sized project. 
+
+If an error appears in file uploading, the user will be redirected to an error page with the appropriate error code.
+
+The backend for this upload (Flask) first validates the data for correctness. Then the digital digest is calculated
+ (to check if image exists in the database). Afterwards appropriate steps are taken to upload the image to the first 
+ bucket with a timestamp-based id. Datastore entity is initialized.
+
+### Further Processing
+
+#### GCF1 - Rescale
+
+The first GCF is triggerd upon an image upload to bucket-1. It downloads the image and rescales it to a width of 512
+ pixels while respecting aspect ratio.
+
+The resulting image is uploaded to bucket-2. The related entity in Datastore is updated with both image URLs. 
+
+#### GCF2 - Inform
+
+The second GCF is triggered upon an image upload to bucket-2, ie. after GCF1 runs. The sole existence of this function
+ is to publish a message to the pub/sub topic 'rescaled-images'. The message posts an attribute with the filename of the
+ uploaded file.
+
+#### GCF3 - Vision
+
+This third and final GCF is the bread and butter of the backend functionality. It is triggered upon a message publication
+ to the 'rescaled-images' topic. It stores the related image into memory and uses Google's Vision API to detect visible
+ text in the image. This text is stored in the related entity Datastore. 
+
+A simple SMTP server is set-up with a dedicated Google/Gmail account to send the results to the uploader/recipient email.
+
+### Other Functionalities
+
+#### Cloudbuild
+
+A `cloudbuild.yaml` file is present in the repository. If the project is integrated with a Google Cloud Source Repository,
+ every `git push` will run `cloudbuild.yaml` if set up in the Cloud Build section. The file runs unit tests on GCF, Flask
+ and then integration tests on both components. If these succeed, the newest versions of the GCF and Google App Engine are
+ deployed.
+
+#### Unit Tests
+
+Very basic unit tests (Python/unittest) are prepared for the GCFs, Flask and integration of both. Their existence is rather a use for
+ presenting how Google Build may run these tests on `git push`.
+
+Below is the list of unit tests.
+
+* GCF
+    * GCF1 - test if image was uploaded to second bucket (test014_image_exists_in_bucket_2)
+    * GCF1 - test if image was rescaled properly (test015_rescale_success)
+    * GCF2 - test if message was properly published (test110_published_trigger)
+* Flask
+    * test if correct image file is successfully uploaded (test010_positive_form_post)
+    * test if negative image file is unsuccessfully uploaded (test011_negative_form_post)
+    * test if oversized image is unsuccessfully uploaded (test012_oversize_form_post)
+    * test if undersized image is unsuccessfully uploaded (test013_undersize_form_post)
+    * test if user not logged in results in unsuccessful upload (test014_not_logged_in)
+    * test if invalid email format results in unsuccessful upload (test015_invalid_email)
+    * test if the image has been uploaded to bucket-1 (test020_image_stored_bucket1)
+* Integration
+    * test if the datastore entity has populated fields (test010_datastore_entries_exist)
+    * test if text has been detected in image (test015_vision_text)
+    * test if the storage blob files are public (test021_images_public)
+
+
+
 ## Final Thoughts
 
 Google App Engine is yet another solution pulled from the never-ending catalogue of Google products,
