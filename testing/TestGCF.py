@@ -11,6 +11,21 @@ from PIL import Image
 import yaml
 
 
+def tearDownModule():
+    with open('static/env.yaml') as y:
+        env_var = yaml.load(y, Loader=yaml.FullLoader)
+
+    bucket1 = TestGCF1.storage_client.bucket(env_var['BUCKET1'])
+    bucket2 = TestGCF1.storage_client.bucket(env_var['BUCKET2'])
+
+    blob1 = bucket1.blob('test_gcf1.png')
+    blob2 = bucket2.blob('test_gcf1.png')
+    blob3 = bucket2.blob('test_gcf2.png')
+    blob1.delete()
+    blob2.delete()
+    blob3.delete()
+
+
 class TestGCF1(unittest.TestCase):
     @classmethod
     def setUpClass(TestGCF1):
@@ -41,15 +56,6 @@ class TestGCF1(unittest.TestCase):
         test_blob = self.bucket2.blob('test_gcf1.png')
         im = Image.open(io.BytesIO(test_blob.download_as_string()), mode='r')
         self.assertEqual(im.size, (512, 512))
-
-    # @classmethod
-    # def tearDownClass(TestGCF1):
-    #     new_blob = TestGCF1.bucket1.blob('test_gcf1.png')
-    #     test_blob = TestGCF1.bucket2.blob('test_gcf1.png')
-    #     if new_blob.exists():
-    #         new_blob.delete()
-    #     if test_blob.exists():
-    #         test_blob.delete()
 
 
 class TestGCF2(unittest.TestCase):
@@ -93,11 +99,6 @@ class TestGCF2(unittest.TestCase):
             response.received_messages[0].message.attributes['filename'],
             'test_gcf2.png'
         )
-
-    @classmethod
-    def tearDownClass(TestGCF2):
-        new_blob = TestGCF2.bucket2.blob('test_gcf2.png')
-        new_blob.delete()
 
 
 if __name__ == '__main__':
