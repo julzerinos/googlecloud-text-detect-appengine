@@ -57,6 +57,8 @@ Code style | ✓ | Python code written according to Flake8, clutter removed from
 Within the repository one may find the `setup.sh` shell script. 
  More specific assumptions may be found within the comments of the files, but in general - the script 
  may be used in an empty project to build the project out of the box in a Google Cloud environment.
+ Please note, that the script does not set up a Git Repository and Cloud Build. These are optional
+ and must be created manually.
 
 The script may be run with `steup.sh [PROJECT_ID] [CLIENT_ID]`, 
 
@@ -68,6 +70,13 @@ If one chooses to set up the project manually, the script file may serve as a co
 ## The Application Overview
 
 The following overview sections are set in order of the project requirements table.
+
+### The Application Flow
+
+Based on the specifications described in the section *The Project Overview*, presented in the diagram below 
+ is a generalized techincal flow of the application. The steps are descirbed in the next subsection.
+
+![Flow Diagram](/static/src/google-diagram.png "Flow Diagram")
 
 ### The Application Accesspoint
 
