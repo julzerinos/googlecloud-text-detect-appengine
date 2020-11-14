@@ -43,7 +43,7 @@ Application is described in a `README.md` | ✓ | This is it
 Users can log into the application using GCP accounts (restricted access). HTTPS only is supported. It is possible to log out | ✓ | GCP accounts are assumed to be all Google accounts. Authentication is shallow (file upload authentication is done in frontend). HTTPS is secured by built-in GAE mechanics
 App stores image files in a Cloud Storage bucket using unique identifiers. KMS is used to create Customer Managed Encryption on uplaoded files | ✓ | Timestamps are used as identifiers for images
 Datastore is used to keep information on *image uploader*, *image name*, *digital digest*, *signed url to original*, *signed url to rescaled* and *Vision API text* | ✓ | Digital digest (hash) is calculated based on bytes string
-Source code is stored in Google Source Repositories | ✓ | For sharing purposes, code is stored on GitHub repositories
+Source code is stored in Google Source Repositories | ✓ | For sharing purposes, code is also stored on GitHub repositories
 Google Cloud Function 1 stores and rescales images | ✓ | -
 Google Cloud Function 3 is triggered by pub/sub, uses Vision API to find text in image and sends an email to uploader | ✓ | -
 Cloud Build builds newer version of application when changes are commited to repo | ✓ | Solved with Cloud Build Triggers (beta)
@@ -60,10 +60,10 @@ Within the repository one may find the `setup.sh` shell script.
  Please note, that the script does not set up a Git Repository and Cloud Build. These are optional
  and must be created manually.
 
-The script may be run with `steup.sh [PROJECT_ID] [CLIENT_ID]`, 
+The script may be run with `setup.sh [PROJECT_ID] [CLIENT_ID]`, 
 
 where the required fields are empty project ID and a Client ID, which may be created after configuring
- the application consent form.
+ the application consent form (ie. first create a project, then setup the consent form and finally run the script).
 
 If one chooses to set up the project manually, the script file may serve as a collection of instructions.
 
